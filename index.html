@@ -2,282 +2,778 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#07070a">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#08080d">
 <link rel="manifest" href="manifest.json">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="ViralForge AI">
-<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
-<title>ViralForge AI — Free Creator Engine</title>
+<link rel="icon" href="icon-512.png">
+<title>ViralForge AI — Creator Engine</title>
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#07070a;--card:#111117;--card2:#17171f;--border:#292934;--purple:#9b5cff;--purple2:#c084fc;--text:#f7f7fa;--muted:#9999a8;--green:#22c55e}
+:root{
+--bg:#08080d;--card:#111119;--card2:#171720;--border:#292936;
+--purple:#8b5cf6;--pink:#ec4899;--cyan:#22d3ee;
+--text:#f8f8fc;--muted:#9696a8;--green:#22c55e
+}
 html{scroll-behavior:smooth}
-body{font-family:Inter,Arial,sans-serif;background:radial-gradient(circle at 50% -10%,rgba(155,92,255,.2),transparent 34%),var(--bg);color:var(--text);min-height:100vh}
-button,input,textarea,select{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}
-.header{position:sticky;top:0;z-index:100;background:rgba(7,7,10,.84);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.07)}
-.nav{max-width:1180px;height:72px;margin:auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between}
+body{
+font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+background:
+radial-gradient(circle at 50% -15%,rgba(139,92,246,.25),transparent 35%),
+radial-gradient(circle at 90% 30%,rgba(236,72,153,.08),transparent 25%),
+var(--bg);
+color:var(--text);min-height:100vh
+}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+
+/* HEADER */
+header{
+position:sticky;top:0;z-index:50;
+background:rgba(8,8,13,.78);
+backdrop-filter:blur(20px);
+border-bottom:1px solid rgba(255,255,255,.07)
+}
+.nav{
+height:70px;max-width:1200px;margin:auto;padding:0 20px;
+display:flex;align-items:center;justify-content:space-between
+}
 .logo{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:900}
-.logo-mark{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,#7c3aed,#c084fc);box-shadow:0 0 28px rgba(139,92,246,.35);position:relative;overflow:hidden}
-.logo-mark:after{content:"";position:absolute;inset:-40%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transform:rotate(25deg);animation:shine 2.8s infinite}
-@keyframes shine{0%,55%{left:-120%}75%,100%{left:120%}}
-.logo-mark span{font-size:18px;z-index:1}.logo em{color:#c084fc;font-style:normal}
-.nav-actions{display:flex;gap:9px;align-items:center}
-.btn{border:1px solid var(--border);background:#15151c;color:#ddd;border-radius:11px;padding:10px 14px;font-weight:800}
-.btn:hover{background:#20202a;color:#fff}
-.btn.primary{border:0;background:linear-gradient(135deg,#7c3aed,#a855f7);color:white}
-.avatar{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#7c3aed,#ec4899);font-weight:900}
-.hero{max-width:1000px;margin:auto;text-align:center;padding:70px 20px 42px}
-.pill{display:inline-flex;gap:8px;align-items:center;border:1px solid rgba(192,132,252,.3);background:rgba(139,92,246,.1);color:#dfc5ff;border-radius:999px;padding:8px 14px;font-size:13px;font-weight:800;margin-bottom:22px}
-.pulse{width:8px;height:8px;background:#22c55e;border-radius:50%;box-shadow:0 0 13px #22c55e}
-.hero h1{font-size:clamp(45px,8vw,78px);line-height:.98;letter-spacing:-3px;font-weight:950}
-.gradient{background:linear-gradient(90deg,#fff,#d8b4fe,#8b5cf6);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p{max-width:720px;margin:22px auto;color:#a4a4b1;font-size:18px;line-height:1.65}
-.hero-actions{display:flex;justify-content:center;gap:10px;margin-top:25px;flex-wrap:wrap}
-.trust{margin-top:16px;color:#696975;font-size:12px}
-.tools{max-width:1120px;margin:10px auto;padding:0 20px}
-.tool-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
-.tool-card{min-height:160px;padding:22px;border:1px solid var(--border);border-radius:21px;background:linear-gradient(145deg,#15151c,#0f0f14);transition:.22s;position:relative;overflow:hidden}
-.tool-card:hover{transform:translateY(-4px);border-color:#7040b7}
-.tool-card.active{border-color:#9b5cff;box-shadow:0 0 0 1px rgba(155,92,246,.15),0 18px 45px rgba(115,55,190,.12)}
-.tool-icon{font-size:30px;margin-bottom:14px}.tool-card h3{font-size:20px;margin-bottom:7px}.tool-card p{color:#8f8f9b;font-size:14px;line-height:1.45}
-.generator{max-width:1050px;margin:48px auto 85px;padding:0 20px}
-.panel{background:linear-gradient(145deg,#121218,#0d0d12);border:1px solid var(--border);border-radius:25px;overflow:hidden;box-shadow:0 25px 80px rgba(0,0,0,.18)}
-.panel-head{padding:23px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #26262f;gap:12px}
-.panel-title{display:flex;gap:12px;align-items:center}.panel-title h2{font-size:22px}.small{font-size:12px;color:#888895;margin-top:4px}
-.status{font-size:12px;color:#aaa;display:flex;gap:7px;align-items:center}.status-dot{width:8px;height:8px;border-radius:50%;background:#22c55e}
-.form{padding:23px}.field{margin-bottom:18px}.field label{display:block;font-size:13px;font-weight:800;margin-bottom:8px}
-textarea,input,select{width:100%;color:white;background:#09090d;border:1px solid #2a2a35;border-radius:13px;padding:14px;outline:none}
-textarea{min-height:125px;resize:vertical;line-height:1.55}
-textarea:focus,input:focus,select:focus{border-color:#8b5cf6;box-shadow:0 0 0 3px rgba(139,92,246,.1)}
-.options{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.generate{width:100%;padding:16px;border:0;border-radius:13px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:white;font-weight:900;box-shadow:0 10px 30px rgba(124,58,237,.22)}
-.generate:hover{transform:translateY(-1px)}
-.loading{display:none;text-align:center;padding:32px}.loading.show{display:block}.spinner{width:34px;height:34px;border:3px solid #2b2037;border-top-color:#a855f7;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 13px}
+.logo-mark{
+width:38px;height:38px;border-radius:12px;
+display:grid;place-items:center;
+background:linear-gradient(135deg,var(--purple),var(--pink));
+box-shadow:0 0 25px rgba(139,92,246,.4);
+animation:logoFloat 3s ease-in-out infinite
+}
+.logo-mark:after{content:"⚡";font-size:19px}
+.logo span{color:#c4b5fd}
+@keyframes logoFloat{50%{transform:translateY(-3px) rotate(2deg)}}
+.navlinks{display:flex;gap:6px}
+.navlinks button{
+background:transparent;border:0;color:#aaa;padding:9px 13px;border-radius:10px
+}
+.navlinks button:hover{background:#181821;color:white}
+.login{
+border:1px solid #343442;background:#15151d;color:white;
+padding:10px 15px;border-radius:11px;font-weight:700
+}
+.login:hover{border-color:var(--purple)}
+
+/* HERO */
+.hero{
+max-width:1000px;margin:auto;text-align:center;padding:72px 20px 45px
+}
+.pill{
+display:inline-flex;align-items:center;gap:8px;
+padding:8px 14px;border-radius:999px;
+border:1px solid rgba(139,92,246,.35);
+background:rgba(139,92,246,.09);color:#d8b4fe;
+font-size:12px;font-weight:800;letter-spacing:.5px;margin-bottom:24px
+}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}
+.hero h1{
+font-size:clamp(43px,8vw,78px);line-height:.98;
+letter-spacing:-4px;font-weight:950
+}
+.gradient{
+background:linear-gradient(90deg,#fff,#c4b5fd,#f0abfc,#fff);
+background-size:250%;
+-webkit-background-clip:text;background-clip:text;color:transparent;
+animation:shine 5s linear infinite
+}
+@keyframes shine{to{background-position:250%}}
+.hero p{
+max-width:690px;margin:24px auto 0;color:var(--muted);
+font-size:18px;line-height:1.7
+}
+.hero-buttons{display:flex;justify-content:center;gap:12px;margin-top:30px}
+.primary,.secondary{
+border-radius:13px;padding:14px 20px;font-weight:800
+}
+.primary{
+border:0;color:white;background:linear-gradient(135deg,var(--purple),var(--pink));
+box-shadow:0 12px 35px rgba(139,92,246,.25)
+}
+.secondary{border:1px solid #343442;background:#13131b;color:#ddd}
+.primary:hover,.secondary:hover{transform:translateY(-2px)}
+
+/* TOOLS */
+.section{max-width:1150px;margin:auto;padding:0 20px}
+.section-title{text-align:center;margin:20px 0 22px}
+.section-title h2{font-size:28px}
+.section-title p{color:var(--muted);margin-top:7px}
+.grid{
+display:grid;grid-template-columns:repeat(4,1fr);gap:14px
+}
+.tool{
+position:relative;overflow:hidden;min-height:165px;
+padding:22px;background:linear-gradient(145deg,#161620,#101017);
+border:1px solid var(--border);border-radius:20px;
+transition:.25s
+}
+.tool:hover{transform:translateY(-4px);border-color:#6841a7}
+.tool.active{
+border-color:var(--purple);
+box-shadow:0 0 0 1px rgba(139,92,246,.15),0 20px 50px rgba(80,30,150,.12)
+}
+.toolicon{font-size:31px;margin-bottom:15px}
+.tool h3{font-size:18px;margin-bottom:7px}
+.tool p{font-size:13px;line-height:1.5;color:#9292a2}
+
+/* GENERATOR */
+.generator{max-width:1050px;margin:55px auto 90px;padding:0 20px}
+.panel{
+background:linear-gradient(145deg,#12121a,#0d0d13);
+border:1px solid var(--border);border-radius:25px;overflow:hidden
+}
+.paneltop{
+padding:23px;border-bottom:1px solid var(--border);
+display:flex;align-items:center;justify-content:space-between
+}
+.panelname{display:flex;gap:12px;align-items:center}
+.panelemoji{font-size:27px}
+.panelname h2{font-size:21px}
+.panelname small{display:block;color:#858595;margin-top:3px}
+.ready{font-size:12px;color:#aaa;display:flex;gap:6px;align-items:center}
+.ready i{width:7px;height:7px;background:var(--green);border-radius:50%}
+.form{padding:23px}
+label{display:block;font-size:13px;font-weight:800;margin-bottom:8px}
+.field{margin-bottom:18px}
+textarea,input,select{
+width:100%;background:#09090e;border:1px solid #30303d;
+border-radius:13px;color:white;outline:0;padding:14px
+}
+textarea{min-height:120px;resize:vertical;line-height:1.55}
+textarea:focus,input:focus,select:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(139,92,246,.1)}
+.options{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.generate{
+width:100%;padding:16px;border:0;border-radius:13px;
+color:white;font-weight:900;
+background:linear-gradient(135deg,var(--purple),var(--pink));
+box-shadow:0 12px 30px rgba(139,92,246,.2)
+}
+.generate:hover{transform:translateY(-2px)}
+
+/* RESULT */
+.loading{display:none;text-align:center;padding:35px;border-top:1px solid var(--border)}
+.loading.show{display:block}
+.spinner{
+width:32px;height:32px;border:3px solid #30263e;
+border-top-color:#a78bfa;border-radius:50%;
+animation:spin .7s linear infinite;margin:0 auto 12px
+}
 @keyframes spin{to{transform:rotate(360deg)}}
-.result{display:none;border-top:1px solid #282832;background:#0b0b10}.result.show{display:block}
-.result-head{padding:20px 23px;display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:1px solid #282832}.result-actions{display:flex;gap:7px}
-.output{padding:26px 23px}.output-section{margin-bottom:28px}.output-section:last-child{margin-bottom:0}.output-section h4{font-size:13px;color:#c084fc;margin-bottom:11px;letter-spacing:.4px}
-.output-section p{color:#d7d7df;line-height:1.7;white-space:pre-wrap}.hook-box{border:1px solid #422275;background:linear-gradient(145deg,#17101f,#100c15);padding:18px;border-radius:15px;line-height:1.6;color:#f4eaff}
-.script-point{display:flex;gap:13px;padding:15px;margin-bottom:9px;border:1px solid #252530;background:#111117;border-radius:14px}.number{min-width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:#7c3aed;font-weight:900}.point-content{flex:1;line-height:1.6}.point-content strong{display:block;margin-bottom:4px}.visual{margin-top:8px;color:#9292a0;font-size:12px}
-.tag-list{display:flex;flex-wrap:wrap;gap:7px}.tag{background:#171720;border:1px solid #2b2b37;padding:7px 10px;border-radius:999px;color:#bbb;font-size:12px}
-.free-note{margin:0 23px 23px;padding:14px;border:1px dashed #3a3545;border-radius:13px;color:#9898a5;font-size:12px;line-height:1.5}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:200;align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}.modal-box{width:min(430px,100%);background:#121218;border:1px solid #30303b;border-radius:20px;padding:23px}.modal-box h2{margin-bottom:8px}.modal-box p{color:#999;line-height:1.5;font-size:13px;margin-bottom:18px}.modal-close{float:right;background:none;border:0;color:#999;font-size:22px}
-footer{text-align:center;color:#666674;font-size:12px;padding:30px 20px 45px}footer strong{color:#9d6ce7}
-@media(max-width:800px){.tool-grid{grid-template-columns:repeat(2,1fr)}.options{grid-template-columns:1fr}.nav-actions{display:flex}.nav-actions .btn{display:inline-flex;padding:8px 9px;font-size:11px}.nav-actions .btn.primary{display:inline-flex}.nav-actions{gap:5px}}
-@media(max-width:520px){.nav{padding:0 10px}.logo{font-size:16px;gap:7px}.logo-mark{width:32px;height:32px;border-radius:10px}.nav-actions .btn{padding:7px 8px;font-size:10px}.hero{padding:52px 17px 35px}.hero h1{font-size:45px;letter-spacing:-2px}.hero p{font-size:15px}.tools,.generator{padding:0 14px}.tool-grid{grid-template-columns:1fr}.tool-card{min-height:135px}.panel-head{padding:18px}.form{padding:18px}.result-head{padding:17px;align-items:flex-start;flex-direction:column}.result-actions{width:100%}.result-actions .btn{flex:1}.output{padding:21px 17px}.avatar{width:38px;height:38px}}
+.result{display:none;border-top:1px solid var(--border)}
+.result.show{display:block}
+.resulthead{
+padding:18px 23px;border-bottom:1px solid var(--border);
+display:flex;justify-content:space-between;align-items:center;gap:10px
+}
+.actions{display:flex;gap:7px}
+.action{
+background:#171720;color:#ddd;border:1px solid #30303c;
+padding:9px 12px;border-radius:9px;font-size:12px;font-weight:700
+}
+.output{padding:25px}
+.outsection{margin-bottom:27px}
+.outsection h4{color:#c4b5fd;font-size:12px;letter-spacing:.8px;margin-bottom:10px}
+.outsection p{color:#d8d8e1;line-height:1.7;white-space:pre-wrap}
+.hook{
+padding:17px;border-radius:15px;
+border:1px solid #56338b;background:#171020;
+color:#f1e8ff;font-size:17px;line-height:1.6
+}
+.item{
+display:flex;gap:12px;padding:15px;margin-bottom:9px;
+background:#12121a;border:1px solid #292934;border-radius:13px
+}
+.num{
+width:31px;height:31px;flex:0 0 31px;border-radius:9px;
+display:grid;place-items:center;background:#6d3bd1;font-weight:900
+}
+.itemtext{line-height:1.55;color:#d4d4dd}
+.taglist{display:flex;flex-wrap:wrap;gap:7px}
+.tag{
+padding:7px 10px;border-radius:999px;background:#171720;
+border:1px solid #2b2b36;color:#bbb;font-size:12px
+}
+
+/* IMAGE GENERATOR */
+.imagebox{
+display:none;padding:23px;border-top:1px solid var(--border)
+}
+.imagebox.show{display:block}
+.imagepreview{
+min-height:230px;border-radius:18px;border:1px dashed #3b3b49;
+display:grid;place-items:center;text-align:center;
+background:radial-gradient(circle at center,rgba(139,92,246,.13),transparent 55%);
+margin-top:15px;padding:25px
+}
+.imagepreview .big{font-size:55px;margin-bottom:10px}
+.imagepreview p{color:#999;line-height:1.6}
+
+/* LOGIN */
+.modal{
+display:none;position:fixed;inset:0;z-index:100;
+background:rgba(0,0,0,.7);backdrop-filter:blur(8px);
+place-items:center;padding:20px
+}
+.modal.show{display:grid}
+.loginbox{
+width:min(410px,100%);background:#12121a;
+border:1px solid #333341;border-radius:22px;padding:25px
+}
+.close{float:right;background:none;border:0;color:#999;font-size:22px}
+.loginbox h2{margin-bottom:7px}
+.loginbox p{color:#8e8e9e;font-size:13px;margin-bottom:20px}
+.loginbox .field{margin-bottom:13px}
+.demo-note{
+margin-top:13px;padding:11px;border-radius:10px;
+background:#191923;color:#8f8f9d;font-size:11px;line-height:1.5
+}
+.login-submit{
+width:100%;padding:13px;border:0;border-radius:11px;
+background:linear-gradient(135deg,var(--purple),var(--pink));
+color:white;font-weight:800
+}
+
+/* FOOTER */
+footer{text-align:center;padding:35px 20px 55px;color:#666675;font-size:12px}
+footer strong{color:#a78bfa}
+
+@media(max-width:850px){
+.grid{grid-template-columns:repeat(2,1fr)}
+.navlinks{display:none}
+}
+@media(max-width:560px){
+.nav{height:64px;padding:0 14px}
+.logo{font-size:18px}
+.logo-mark{width:34px;height:34px}
+.hero{padding-top:52px}
+.hero h1{letter-spacing:-2.5px}
+.hero p{font-size:15px}
+.hero-buttons{flex-direction:column}
+.grid{grid-template-columns:1fr}
+.options{grid-template-columns:1fr}
+.generator{padding:0 14px}
+.section{padding:0 14px}
+.paneltop{padding:18px}
+.form{padding:18px}
+.resulthead{align-items:flex-start;flex-direction:column}
+.actions{width:100%}
+.action{flex:1}
+.output{padding:20px 17px}
+}
 </style>
 </head>
+
 <body>
 
-<header class="header">
+<header>
 <nav class="nav">
-  <div class="logo"><div class="logo-mark"><span>⚡</span></div>ViralForge <em>AI</em></div>
-  <div class="nav-actions">
-    <button class="btn" onclick="openLogin()">Log in</button>
-    <button class="btn primary" onclick="openLogin()">Sign up</button>
-    <div class="avatar" id="avatar">VF</div>
-  </div>
+<a class="logo" href="#">
+<div class="logo-mark"></div>
+<div>ViralForge <span>AI</span></div>
+</a>
+
+<div class="navlinks">
+<button onclick="goGenerator()">Generator</button>
+<button onclick="about()">How it works</button>
+</div>
+
+<button class="login" onclick="openLogin()">Log in</button>
 </nav>
 </header>
 
 <main>
+
 <section class="hero">
-  <div class="pill"><span class="pulse"></span> $0 STARTER CREATOR ENGINE</div>
-  <h1>Make content that <span class="gradient">stops the scroll.</span></h1>
-  <p>ViralForge AI gives you a free starting point for scripts, hooks, titles, captions, ideas, complete content packages — plus an AI image workflow ready for a future API.</p>
-  <div class="hero-actions">
-    <button class="btn primary" onclick="scrollToGenerator()">⚡ Start Creating Free</button>
-    <button class="btn" onclick="showAbout()">How it works</button>
-  </div>
-  <div class="trust">No credit card • No API key in your browser • Works on Vercel free hosting</div>
+<div class="pill"><span class="pulse"></span> VIRALFORGE AI CREATOR ENGINE</div>
+
+<h1>
+Turn ideas into
+<span class="gradient">viral content.</span>
+</h1>
+
+<p>
+Create scripts, hooks, titles, captions, ideas and complete
+content packages — all from one simple creator workspace.
+</p>
+
+<div class="hero-buttons">
+<button class="primary" onclick="goGenerator()">✨ Start Creating</button>
+<button class="secondary" onclick="openImage()">🎨 AI Image</button>
+</div>
 </section>
 
-<section class="tools">
-<div class="tool-grid">
-  <div class="tool-card active" data-tool="script" onclick="selectTool('script')"><div class="tool-icon">✍️</div><h3>Script Generator</h3><p>Create 45–60 second short-form scripts.</p></div>
-  <div class="tool-card" data-tool="hooks" onclick="selectTool('hooks')"><div class="tool-icon">🪝</div><h3>Viral Hooks</h3><p>Generate scroll-stopping opening lines.</p></div>
-  <div class="tool-card" data-tool="titles" onclick="selectTool('titles')"><div class="tool-icon">🏷️</div><h3>Viral Titles</h3><p>Generate high-click title concepts.</p></div>
-  <div class="tool-card" data-tool="captions" onclick="selectTool('captions')"><div class="tool-icon">💬</div><h3>Captions</h3><p>Create captions and hashtag sets.</p></div>
-  <div class="tool-card" data-tool="ideas" onclick="selectTool('ideas')"><div class="tool-icon">💡</div><h3>Content Ideas</h3><p>Turn one topic into many video angles.</p></div>
-  <div class="tool-card" data-tool="engine" onclick="selectTool('engine')"><div class="tool-icon">🚀</div><h3>Viral Engine</h3><p>Build a complete content package.</p></div>
-  <div class="tool-card" data-tool="image" onclick="selectTool('image')"><div class="tool-icon">🖼️</div><h3>AI Image</h3><p>Prepare image prompts now; connect an API later.</p></div>
+<section class="section">
+<div class="section-title">
+<h2>Everything creators need</h2>
+<p>Choose a tool and turn your idea into content.</p>
+</div>
+
+<div class="grid">
+
+<div class="tool active" data-tool="script" onclick="selectTool('script')">
+<div class="toolicon">✍️</div>
+<h3>Script Generator</h3>
+<p>Build engaging 45–60 second video scripts.</p>
+</div>
+
+<div class="tool" data-tool="hooks" onclick="selectTool('hooks')">
+<div class="toolicon">🪝</div>
+<h3>Viral Hooks</h3>
+<p>Create scroll-stopping opening lines.</p>
+</div>
+
+<div class="tool" data-tool="titles" onclick="selectTool('titles')">
+<div class="toolicon">🏷️</div>
+<h3>Viral Titles</h3>
+<p>Generate high-click title ideas.</p>
+</div>
+
+<div class="tool" data-tool="captions" onclick="selectTool('captions')">
+<div class="toolicon">💬</div>
+<h3>Captions</h3>
+<p>Write captions built for engagement.</p>
+</div>
+
+<div class="tool" data-tool="ideas" onclick="selectTool('ideas')">
+<div class="toolicon">💡</div>
+<h3>Content Ideas</h3>
+<p>Discover fresh angles for your niche.</p>
+</div>
+
+<div class="tool" data-tool="engine" onclick="selectTool('engine')">
+<div class="toolicon">🚀</div>
+<h3>Viral Engine</h3>
+<p>Create a complete content package.</p>
+</div>
+
+<div class="tool" data-tool="image" onclick="openImage()">
+<div class="toolicon">🎨</div>
+<h3>AI Image</h3>
+<p>Create visual prompts for your content.</p>
+</div>
+
+<div class="tool" onclick="openLogin()">
+<div class="toolicon">👤</div>
+<h3>Creator Account</h3>
+<p>Log in to your creator workspace.</p>
+</div>
+
 </div>
 </section>
 
 <section class="generator" id="generator">
+
 <div class="panel">
-  <div class="panel-head">
-    <div class="panel-title"><span id="panelEmoji">✍️</span><div><h2 id="panelTitle">Script Generator</h2><div class="small" id="panelDescription">Create an engaging 45–60 second short-form video script.</div></div></div>
-    <div class="status"><span class="status-dot"></span><span id="statusText">Free mode</span></div>
-  </div>
 
-  <div class="form">
-    <div class="field">
-      <label for="topic">What is your video about?</label>
-      <textarea id="topic" placeholder="Example: 5 surprising facts about the human brain"></textarea>
-    </div>
-    <div class="options">
-      <div class="field"><label for="language">Language</label><select id="language"><option value="English">English</option><option value="Urdu">اردو (Urdu)</option><option value="Roman Urdu">Roman Urdu</option></select></div>
-      <div class="field"><label for="platform">Platform</label><select id="platform"><option>TikTok</option><option>YouTube Shorts</option><option>Instagram Reels</option><option>Facebook Reels</option></select></div>
-      <div class="field"><label for="tone">Tone</label><select id="tone"><option value="viral">Viral & Energetic</option><option value="shocking">Shocking</option><option value="funny">Funny</option><option value="mysterious">Mysterious</option><option value="educational">Educational</option><option value="dramatic">Dramatic</option></select></div>
-      <div class="field"><label for="style">Style</label><select id="style"><option value="fast">Fast-paced</option><option value="story">Storytelling</option><option value="list">Top 5 / List</option><option value="facts">Facts</option><option value="tips">Tips & Hacks</option></select></div>
-    </div>
-    <button class="generate" onclick="generateContent()">✨ Generate with ViralForge AI</button>
-  </div>
+<div class="paneltop">
+<div class="panelname">
+<div class="panelemoji" id="emoji">✍️</div>
+<div>
+<h2 id="tooltitle">Script Generator</h2>
+<small id="description">Create an engaging short-form video script.</small>
+</div>
+</div>
+<div class="ready"><i></i> Ready</div>
+</div>
 
-  <div class="free-note">💡 <b>$0 mode:</b> this starter build runs locally in your browser, so there is no paid API and no secret key to expose. When you're ready, a Vercel serverless endpoint can replace the local generator with a real AI model while keeping the API key private.</div>
+<div class="form">
 
-  <div class="loading" id="loading"><div class="spinner"></div><strong>ViralForge is creating your content...</strong><div class="small">Building hooks, structure and viral angles</div></div>
-  <div class="result" id="result">
-    <div class="result-head"><h3>✨ Generated Result</h3><div class="result-actions"><button class="btn" onclick="copyResult()">📋 Copy</button><button class="btn" onclick="downloadResult()">↓ Save</button><button class="btn" onclick="generateContent()">🔄 Again</button></div></div>
-    <div class="output" id="output"></div>
-  </div>
+<div class="field">
+<label>What is your video about?</label>
+<textarea id="topic" placeholder="Example: 5 surprising facts about the human brain"></textarea>
+</div>
+
+<div class="options">
+
+<div class="field">
+<label>Platform</label>
+<select id="platform">
+<option>TikTok</option>
+<option>YouTube Shorts</option>
+<option>Instagram Reels</option>
+<option>Facebook Reels</option>
+</select>
+</div>
+
+<div class="field">
+<label>Tone</label>
+<select id="tone">
+<option value="viral">Viral & Energetic</option>
+<option value="shocking">Shocking</option>
+<option value="funny">Funny</option>
+<option value="mysterious">Mysterious</option>
+<option value="educational">Educational</option>
+<option value="dramatic">Dramatic</option>
+</select>
+</div>
+
+<div class="field">
+<label>Style</label>
+<select id="style">
+<option>Fast-paced</option>
+<option>Storytelling</option>
+<option>Top 5 / List</option>
+<option>Facts</option>
+<option>Tips & Hacks</option>
+</select>
+</div>
+
+</div>
+
+<button class="generate" onclick="generate()">✨ Generate with ViralForge AI</button>
+
+</div>
+
+<div class="loading" id="loading">
+<div class="spinner"></div>
+<strong>ViralForge is creating your content...</strong>
+<p style="color:#888;margin-top:6px;font-size:12px">Building hooks, structure and viral angles</p>
+</div>
+
+<div class="result" id="result">
+
+<div class="resulthead">
+<strong>✨ Generated Content</strong>
+<div class="actions">
+<button class="action" onclick="copyResult()">📋 Copy</button>
+<button class="action" onclick="saveResult()">↓ Save</button>
+<button class="action" onclick="generate()">🔄 Again</button>
+</div>
+</div>
+
+<div class="output" id="output"></div>
+</div>
+
+<div class="imagebox" id="imagebox">
+<strong>🎨 AI Image Generator</strong>
+<p style="color:#888;font-size:13px;margin-top:5px">
+Create a ready-to-use image prompt for your video.
+</p>
+
+<div class="field" style="margin-top:17px">
+<label>Describe the image you want</label>
+<textarea id="imageprompt" placeholder="Example: A mysterious ancient temple hidden in a jungle, cinematic lighting..."></textarea>
+</div>
+
+<button class="generate" onclick="makeImagePrompt()">🎨 Generate Image Prompt</button>
+
+<div class="imagepreview" id="imagepreview">
+<div>
+<div class="big">🖼️</div>
+<p>Your optimized image prompt will appear here.</p>
+</div>
+</div>
+</div>
+
 </div>
 </section>
+
 </main>
 
-<footer>Built with <strong>ViralForge AI</strong> — Create. Optimize. Go viral.</footer>
+<footer>
+Built with <strong>ViralForge AI</strong> · Create · Optimize · Go Viral
+</footer>
 
-<div class="modal" id="loginModal" onclick="if(event.target===this)closeLogin()">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeLogin()">×</button>
-    <h2>ViralForge AI</h2>
-    <p>This $0 starter uses a local demo account. It is useful for the UI now, but it is <b>not real secure authentication</b>. Connect Supabase or Firebase later for production login.</p>
-    <div class="field"><label>Your name</label><input id="loginName" placeholder="Creator name"></div>
-    <button class="generate" onclick="demoLogin()">Continue Free</button>
-  </div>
+<!-- LOGIN MODAL -->
+<div class="modal" id="modal">
+<div class="loginbox">
+<button class="close" onclick="closeLogin()">×</button>
+<h2>Welcome to ViralForge</h2>
+<p>Sign in to your creator workspace.</p>
+
+<div class="field">
+<label>Email</label>
+<input id="email" type="email" placeholder="you@example.com">
+</div>
+
+<div class="field">
+<label>Password</label>
+<input id="password" type="password" placeholder="••••••••">
+</div>
+
+<button class="login-submit" onclick="demoLogin()">Continue</button>
+
+<div class="demo-note">
+Demo login: this version stores the session only in your browser.
+For real secure accounts, we will connect Supabase/Firebase later.
+</div>
+</div>
 </div>
 
 <script>
-let currentTool="script",lastResultText="";
-const tools={
-script:["✍️","Script Generator","Create an engaging 45–60 second short-form video script."],
-hooks:["🪝","Viral Hooks","Generate powerful opening lines designed to stop the scroll."],
-titles:["🏷️","Viral Titles","Generate high-click title concepts for your video."],
-captions:["💬","Captions","Create captions designed for comments and shares."],
-ideas:["💡","Content Ideas","Generate fresh content angles around your topic."],
-engine:["🚀","Viral Engine","Create a complete viral-ready content package."],
-image:["🖼️","AI Image Generator","Create polished prompts now; connect a real image API later."]
+let currentTool="script";
+let lastText="";
+
+const config={
+script:["✍️","Script Generator","Create an engaging short-form video script."],
+hooks:["🪝","Viral Hooks","Generate powerful opening lines."],
+titles:["🏷️","Viral Titles","Generate high-click titles."],
+captions:["💬","Captions","Create captions designed for engagement."],
+ideas:["💡","Content Ideas","Discover fresh content angles."],
+engine:["🚀","Viral Engine","Create a complete content package."]
 };
+
+const topic=document.getElementById("topic");
+topic.value="5 surprising facts about the human brain";
+
+function goGenerator(){
+document.getElementById("generator").scrollIntoView({behavior:"smooth"});
+}
+
 function selectTool(tool){
- currentTool=tool; document.querySelectorAll(".tool-card").forEach(c=>c.classList.toggle("active",c.dataset.tool===tool));
- const d=tools[tool];document.getElementById("panelEmoji").textContent=d[0];document.getElementById("panelTitle").textContent=d[1];document.getElementById("panelDescription").textContent=d[2];
- scrollToGenerator();
+if(tool==="image"){openImage();return}
+currentTool=tool;
+document.querySelectorAll(".tool").forEach(x=>{
+x.classList.toggle("active",x.dataset.tool===tool)
+});
+document.getElementById("emoji").textContent=config[tool][0];
+document.getElementById("tooltitle").textContent=config[tool][1];
+document.getElementById("description").textContent=config[tool][2];
+goGenerator();
 }
-function scrollToGenerator(){document.getElementById("generator").scrollIntoView({behavior:"smooth",block:"start"})}
-function getTopic(){const t=document.getElementById("topic").value.trim();if(!t){alert("Enter a topic first.");document.getElementById("topic").focus();return null}return t}
-function generateContent(){
- const topic=getTopic();if(!topic)return;
- const loading=document.getElementById("loading"),result=document.getElementById("result");
- result.classList.remove("show");loading.classList.add("show");
- setTimeout(()=>{
-  let html=currentTool==="script"?createScript(topic):currentTool==="hooks"?createHooks(topic):currentTool==="titles"?createTitles(topic):currentTool==="captions"?createCaptions(topic):currentTool==="ideas"?createIdeas(topic):currentTool==="engine"?createEngine(topic):createImage(topic);
-  document.getElementById("output").innerHTML=html;lastResultText=document.getElementById("output").innerText;
-  loading.classList.remove("show");result.classList.add("show");result.scrollIntoView({behavior:"smooth",block:"start"});
- },650);
+
+function generate(){
+let t=topic.value.trim();
+if(!t){alert("Please enter a topic first.");topic.focus();return}
+
+let loading=document.getElementById("loading");
+let result=document.getElementById("result");
+loading.classList.add("show");
+result.classList.remove("show");
+
+setTimeout(()=>{
+let html="";
+if(currentTool==="script")html=script(t);
+if(currentTool==="hooks")html=hooks(t);
+if(currentTool==="titles")html=titles(t);
+if(currentTool==="captions")html=captions(t);
+if(currentTool==="ideas")html=ideas(t);
+if(currentTool==="engine")html=engine(t);
+
+document.getElementById("output").innerHTML=html;
+lastText=document.getElementById("output").innerText;
+loading.classList.remove("show");
+result.classList.add("show");
+result.scrollIntoView({behavior:"smooth"});
+},700);
 }
-function getHook(topic,tone){
- const hooks={
- viral:`STOP SCROLLING! You won't believe what happens when you discover the truth about ${topic}...`,
- shocking:`This is the shocking truth about ${topic} that most people never hear about.`,
- funny:`Okay, explain why nobody told me THIS about ${topic} 😂`,
- mysterious:`There's something strange about ${topic} that almost nobody notices...`,
- educational:`Here are 5 things you should know about ${topic} — before you believe everything you hear.`,
- dramatic:`Everything you think you know about ${topic} is about to change.`
- };return hooks[tone]||hooks.viral;
+
+function hook(t){
+return `STOP SCROLLING! You probably don't know this about ${t}... and the final part changes everything.`;
 }
-function capitalize(t){return t?t.charAt(0).toUpperCase()+t.slice(1):""}
-function point(n,title,text,visual="Use fast cuts, captions and a strong visual."){
- return `<div class="script-point"><div class="number">${n}</div><div class="point-content"><strong>${title}</strong><div>${text}</div><div class="visual">🎥 Visual: ${visual}</div></div></div>`
+
+function script(t){
+return `
+<div class="outsection">
+<h4>🔥 HOOK</h4>
+<div class="hook">${hook(t)}</div>
+</div>
+
+<div class="outsection">
+<h4>🎬 INTRO</h4>
+<p>Stop scrolling — because what you're about to discover about ${t} is probably not what you expect. Stay until the end because the final point is the one most people miss.</p>
+</div>
+
+<div class="outsection">
+<h4>⚡ MAIN CONTENT</h4>
+
+${[
+["The surprising beginning",`Most people don't realize how interesting ${t} really is. There is a detail here that completely changes the way you see the subject.`],
+["The unexpected part",`Here's where it gets interesting. Something about ${t} is very different from what most people assume.`],
+["The hidden detail",`And this is the part most people never hear about. ${cap(t)} has an unexpected side that makes the whole subject fascinating.`],
+["The big reveal",`Now here's the detail that makes this worth remembering. Once you know this, you'll see ${t} differently.`],
+["The payoff",`So if you remember one thing about ${t}, remember this: the obvious answer isn't always the real story.`]
+].map((x,i)=>`
+<div class="item">
+<div class="num">${i+1}</div>
+<div class="itemtext"><strong>${x[0]}</strong><br>${x[1]}<br><small style="color:#888">🎥 Visual: fast cuts, captions and a strong visual change.</small></div>
+</div>`).join("")}
+</div>
+
+<div class="outsection">
+<h4>📢 CTA</h4>
+<p>Which part surprised you the most? Tell me in the comments and follow for more.</p>
+</div>
+
+<div class="outsection">
+<h4>📱 FORMAT</h4>
+<div class="taglist">
+<span class="tag">${document.getElementById("platform").value}</span>
+<span class="tag">45–60 seconds</span>
+<span class="tag">Fast cuts</span>
+<span class="tag">Captions</span>
+</div>
+</div>`;
 }
-function isUrdu(){return document.getElementById("language").value==="Urdu"}
-function isRomanUrdu(){return document.getElementById("language").value==="Roman Urdu"}
-function createUrduScript(topic){
- return `<div class="output-section" dir="rtl"><h4>🔥 ہُک</h4><div class="hook-box">رک جائیں! ${topic} کے بارے میں یہ حیران کن بات شاید آپ نے پہلے کبھی نہیں سنی ہوگی۔</div></div>
- <div class="output-section" dir="rtl"><h4>🎬 تعارف</h4><p>اس ویڈیو میں ہم ${topic} کے بارے میں ایسی دلچسپ اور حیران کن باتیں جانیں گے جو شاید آپ کو حیران کر دیں۔ آخر تک ضرور دیکھیں، کیونکہ آخری نکتہ سب سے زیادہ دلچسپ ہے۔</p></div>
- <div class="output-section" dir="rtl"><h4>⚡ مرکزی اسکرپٹ</h4>
- ${point(1,"پہلا حیران کن نکتہ",`${topic} کے بارے میں ایک ایسی بات جسے بہت سے لوگ نہیں جانتے۔ اسے مختصر اور واضح انداز میں پیش کریں۔`,"شروع میں زبردست ویژول اور بڑا اردو ٹیکسٹ دکھائیں۔")}
- ${point(2,"غیر متوقع حقیقت",`لیکن اصل دلچسپ بات یہ ہے کہ ${topic} کے بارے میں عام خیال ہمیشہ مکمل حقیقت نہیں ہوتا۔`,"موازنہ یا پہلے اور بعد کا ویژول استعمال کریں۔")}
- ${point(3,"وہ بات جو اکثر رہ جاتی ہے",`یہ وہ نکتہ ہے جس پر اکثر لوگ توجہ نہیں دیتے، اور یہی اسے مزید دلچسپ بناتا ہے۔`,"کلوز اپ اور ڈرامائی ساؤنڈ ایفیکٹ استعمال کریں۔")}
- ${point(4,"بڑا انکشاف",`اب وہ بات سامنے آتی ہے جو ${topic} کو بالکل مختلف انداز میں دیکھنے پر مجبور کر سکتی ہے۔`,"ایک مختصر توقف کے بعد بڑا انکشاف کریں۔")}
- ${point(5,"اختتام",`اگر آپ صرف ایک بات یاد رکھیں تو وہ یہ ہو: ${topic} میں بظاہر نظر آنے والی حقیقت کے پیچھے ایک اور دلچسپ کہانی ہو سکتی ہے۔`,"سب سے مضبوط ویژول کے ساتھ ویڈیو ختم کریں۔")}
- </div>
- <div class="output-section" dir="rtl"><h4>📢 کال ٹو ایکشن</h4><p>آپ کو کون سا نکتہ سب سے زیادہ حیران کن لگا؟ کمنٹ میں ضرور بتائیں اور مزید ویڈیوز کے لیے فالو کریں۔</p></div>
- <div class="output-section"><h4>📱 FORMAT</h4><div class="tag-list"><span class="tag">Urdu</span><span class="tag">45–60 sec</span><span class="tag">Short-form</span></div></div>`;
+
+function hooks(t){
+let a=[
+`STOP SCROLLING! You won't believe this about ${t}...`,
+`Nobody talks about this side of ${t}.`,
+`I thought I knew everything about ${t}... until I found this.`,
+`This sounds fake, but it's actually true about ${t}.`,
+`Before you scroll, you need to know this about ${t}.`,
+`Most people get ${t} completely wrong.`,
+`You've probably seen ${t}, but never noticed THIS.`,
+`Here's something about ${t} almost nobody tells you.`,
+`The truth about ${t} is crazier than you think.`,
+`Wait until you see the final part of ${t}.`
+];
+return `<div class="outsection"><h4>🪝 10 SCROLL-STOPPING HOOKS</h4>
+${a.map((x,i)=>`<div class="item"><div class="num">${i+1}</div><div class="itemtext">${x}</div></div>`).join("")}
+</div><div class="outsection"><h4>🎯 BEST PICK</h4><div class="hook">${a[0]}</div></div>`;
 }
-function createRomanUrduScript(topic){
- return `<div class="output-section"><h4>🔥 HOOK</h4><div class="hook-box">Ruk jao! ${topic} ke baare mein yeh hairan kun baat shayad aap ne pehle kabhi nahi suni hogi.</div></div>
- <div class="output-section"><h4>🎬 INTRO</h4><p>Is video mein hum ${topic} ke baare mein kuch aisi interesting aur surprising baatein jaanenge jo shayad aap ko hairan kar dein. Aakhir tak zaroor dekhein, kyun ke last point sab se zyada interesting hai.</p></div>
- <div class="output-section"><h4>⚡ MAIN SCRIPT</h4>
- ${point(1,"Pehla surprising point",`${topic} ke baare mein ek aisi baat jo bohat se log nahi jaante.`)}
- ${point(2,"Unexpected fact",`Lekin asal interesting baat yeh hai ke ${topic} ke baare mein aam soch hamesha poori haqeeqat nahi hoti.`)}
- ${point(3,"Hidden detail",`Yeh woh point hai jis par aksar log tawajjo nahi dete, aur isi wajah se yeh aur bhi interesting hai.`)}
- ${point(4,"Big reveal",`Ab woh baat saamne aati hai jo ${topic} ko bilkul different nazar se dekhne par majboor kar sakti hai.`)}
- ${point(5,"Payoff",`Agar aap sirf ek baat yaad rakhein, to woh yeh hai: ${topic} ke peeche ek aur interesting kahani ho sakti hai.`)}
- </div>
- <div class="output-section"><h4>📢 CTA</h4><p>Aap ko konsa point sab se zyada surprising laga? Comment mein zaroor batayein aur mazeed videos ke liye follow karein.</p></div>
- <div class="output-section"><h4>📱 FORMAT</h4><div class="tag-list"><span class="tag">Roman Urdu</span><span class="tag">45–60 sec</span><span class="tag">Short-form</span></div></div>`;
+
+function titles(t){
+let a=[
+`5 Things About ${cap(t)} You Probably Didn't Know 🤯`,
+`The Truth About ${cap(t)} Nobody Tells You`,
+`You Won't Believe These Facts About ${cap(t)}`,
+`This Changes Everything About ${cap(t)} 😳`,
+`The Secret Side of ${cap(t)}`,
+`What Nobody Tells You About ${cap(t)}`,
+`7 Crazy Facts About ${cap(t)}`,
+`The Most Surprising Thing About ${cap(t)}`,
+`Watch This Before You Learn About ${cap(t)}`,
+`The Dark Truth Behind ${cap(t)}...`
+];
+return `<div class="outsection"><h4>🏷️ VIRAL TITLE IDEAS</h4>
+${a.map((x,i)=>`<div class="item"><div class="num">${i+1}</div><div class="itemtext"><strong>${x}</strong></div></div>`).join("")}</div>`;
 }
-function createScript(topic){
- if(isUrdu()) return createUrduScript(topic);
- if(isRomanUrdu()) return createRomanUrduScript(topic);
- const tone=document.getElementById("tone").value,platform=document.getElementById("platform").value,style=document.getElementById("style").value;
- let h=`<div class="output-section"><h4>🔥 HOOK</h4><div class="hook-box">${getHook(topic,tone)}</div></div>`;
- h+=`<div class="output-section"><h4>🎬 INTRO</h4><p>Stop scrolling — because what you're about to discover about ${topic} is probably not what you expect. Stay until the end, because the final point is the one most people completely miss.</p></div><div class="output-section"><h4>⚡ MAIN CONTENT</h4>`;
- h+=point(1,"The first surprise",`Most people don't realize how interesting ${topic} really is. Start with the detail that changes the viewer's expectations.`,"Open with a close-up, fast zoom and large on-screen text.");
- h+=point(2,"The unexpected part",`But here's where it gets interesting. Something about ${topic} is very different from what most people assume.`,"Show a contrast, comparison or quick transformation.");
- h+=point(3,"The fact people miss",`And this is the part most people never hear about. ${capitalize(topic)} has an unexpected angle that makes the whole subject more fascinating.`,"Use an unusual image and a dramatic sound hit.");
- h+=point(4,"The big reveal",`Now here's the detail that makes this worth remembering. Once you know this, you'll probably see ${topic} differently.`,"Pause briefly, then reveal the key point with bold text.");
- h+=point(5,"The payoff",`So if you remember only one thing about ${topic}, remember this: the obvious answer isn't always the real story.`,"End on the strongest visual and a fast punch-in.");
- h+=`</div><div class="output-section"><h4>📢 CTA</h4><p>Which part surprised you the most? Tell me in the comments — and follow for more ${style==="tips"?"tips and hacks":"surprising facts"}.</p></div><div class="output-section"><h4>📱 FORMAT</h4><div class="tag-list"><span class="tag">${platform}</span><span class="tag">${document.getElementById("language").value}</span><span class="tag">45–60 sec</span><span class="tag">${tone}</span><span class="tag">${style}</span><span class="tag">Fast cuts</span><span class="tag">Captions</span></div></div>`;
- return h;
+
+function captions(t){
+let a=[
+`You probably didn't know this about ${t} 👀\n\nWhich part surprised you most?\n\n👇 Tell me below.\n\nFollow for more!`,
+`Wait... did you know this about ${t}? 🤯\n\nSave this so you don't forget it.`,
+`The more you learn about ${t}, the crazier it gets.\n\nWhich part surprised you?`,
+`Most people don't realize how interesting ${t} really is.\n\nSend this to someone who needs to see it.`,
+`Okay, this genuinely surprised me 😳\n\nRate this from 1–10!`
+];
+return `<div class="outsection"><h4>💬 VIRAL CAPTIONS</h4>
+${a.map((x,i)=>`<div class="item"><div class="num">${i+1}</div><div class="itemtext" style="white-space:pre-wrap">${x}</div></div>`).join("")}</div>
+<div class="outsection"><h4>#️⃣ HASHTAGS</h4>
+<div class="taglist"><span class="tag">#viral</span><span class="tag">#fyp</span><span class="tag">#shorts</span><span class="tag">#reels</span><span class="tag">#facts</span><span class="tag">#didyouknow</span></div></div>`;
 }
-function createHooks(topic){
- const a=[`STOP SCROLLING! You won't believe what happens when you discover the truth about ${topic}...`,`Nobody talks about this side of ${topic} — and once you know it, you'll see it differently.`,`I thought I knew everything about ${topic}... then I discovered this.`,`This sounds completely fake, but the truth about ${topic} is actually crazier.`,`Before you scroll, you need to know this one thing about ${topic}.`,`Most people get ${topic} completely wrong. Here's why.`,`The next 30 seconds could completely change what you think about ${topic}.`,`Wait until you see the final part — because it makes everything else make sense.`,`You've probably seen ${topic} before, but you've never noticed THIS.`,`Here's something about ${topic} that almost nobody tells you.`];
- return `<div class="output-section"><h4>🪝 10 SCROLL-STOPPING HOOKS</h4>${a.map((x,i)=>point(i+1,x,"","Make the first frame visually impossible to ignore.")).join("")}</div><div class="output-section"><h4>🎯 BEST PICK</h4><div class="hook-box">${a[0]}</div></div>`;
+
+function ideas(t){
+let a=[
+`5 surprising facts about ${t}`,
+`The biggest myths about ${t}`,
+`What would happen if ${t} disappeared?`,
+`The hidden history of ${t}`,
+`Things beginners get wrong about ${t}`,
+`The most unusual examples of ${t}`,
+`${t}: 5 things nobody warns you about`,
+`The science behind ${t}`,
+`I tested the most popular ${t} claim`,
+`The future of ${t}`,
+`The craziest story involving ${t}`,
+`What experts know about ${t}`
+];
+return `<div class="outsection"><h4>💡 12 CONTENT IDEAS</h4>
+${a.map((x,i)=>`<div class="item"><div class="num">${i+1}</div><div class="itemtext">${x}</div></div>`).join("")}</div>`;
 }
-function createTitles(topic){
- const a=[`5 Things About ${capitalize(topic)} You Probably Didn't Know 🤯`,`The Truth About ${capitalize(topic)} Nobody Tells You`,`You Won't Believe These Facts About ${capitalize(topic)}`,`I Wish I Knew This About ${capitalize(topic)} Sooner`,`This Changes Everything About ${capitalize(topic)} 😳`,`The Secret Side of ${capitalize(topic)}`,`What Nobody Tells You About ${capitalize(topic)}`,`7 Crazy Facts About ${capitalize(topic)}`,`The Most Surprising Thing About ${capitalize(topic)}`,`Watch This Before You Learn About ${capitalize(topic)}`,`This Is Why ${capitalize(topic)} Is So Interesting`,`The Dark Truth Behind ${capitalize(topic)}...`];
- return `<div class="output-section"><h4>🏷️ VIRAL TITLE IDEAS</h4>${a.map((x,i)=>point(i+1,x,"","Pair the title with a high-contrast first frame.")).join("")}</div>`;
+
+function engine(t){
+return `
+<div class="outsection"><h4>🚀 COMPLETE VIRAL PACKAGE</h4>
+<div class="hook">${hook(t)}</div>
+</div>
+
+<div class="outsection"><h4>🏷️ TITLE</h4>
+<p>5 Things About ${cap(t)} You Probably Didn't Know 🤯</p>
+</div>
+
+<div class="outsection"><h4>🎬 VIDEO STRUCTURE</h4>
+${["0–3 sec — Hook","3–10 sec — Curiosity","10–45 sec — Main Value","45–55 sec — Big Reveal","55–60 sec — CTA"].map((x,i)=>`<div class="item"><div class="num">${i+1}</div><div class="itemtext"><strong>${x}</strong><br>Use fast cuts, captions and visual changes.</div></div>`).join("")}
+</div>
+
+<div class="outsection"><h4>💬 CAPTION</h4>
+<p>You probably didn't know this about ${t} 👀
+
+Which part surprised you most?
+
+👇 Tell me below.
+
+Follow for more!</p>
+</div>
+
+<div class="outsection"><h4>#️⃣ HASHTAGS</h4>
+<div class="taglist"><span class="tag">#viral</span><span class="tag">#fyp</span><span class="tag">#shorts</span><span class="tag">#reels</span><span class="tag">#facts</span><span class="tag">#creator</span></div>
+</div>`;
 }
-function createCaptions(topic){
- const a=[`You probably didn't know this about ${topic} 👀\n\nWhich fact surprised you the most?\n\n👇 Tell me in the comments.\n\nFollow for more!`,`Wait... did you know this about ${topic}? 🤯\n\nI had to look this up twice.\n\nSave this so you don't forget it.`,`The more you learn about ${topic}, the crazier it gets.\n\nWhich part surprised you?\n\n🔥 Comment your answer below.`,`Most people scroll past this without realizing how interesting ${topic} really is.\n\nSend this to someone who needs to see it.`,`Okay, this one genuinely surprised me 😳\n\nWhat would you rate this fact from 1–10?\n\n👇 Drop your number below.`];
- return `<div class="output-section"><h4>💬 VIRAL CAPTIONS</h4>${a.map((x,i)=>point(i+1,"Caption "+(i+1),x,"Keep the first line short and curiosity-driven.")).join("")}</div><div class="output-section"><h4>#️⃣ HASHTAGS</h4><div class="tag-list"><span class="tag">#viral</span><span class="tag">#fyp</span><span class="tag">#shorts</span><span class="tag">#reels</span><span class="tag">#facts</span><span class="tag">#didyouknow</span><span class="tag">#creator</span></div></div>`;
+
+function cap(x){
+return x.charAt(0).toUpperCase()+x.slice(1);
 }
-function createIdeas(topic){
- const a=[["5 surprising facts","Fast educational list"],["Biggest myths","Myth vs reality"],["What if it disappeared?","Curiosity / hypothetical"],["Hidden history","Storytelling"],["Beginner mistakes","Practical value"],["Most unusual examples","Shock / curiosity"],["5 things nobody warns you about","Warning / list"],["Science behind it","Explainer"],["I tested the biggest claim","Experiment"],["The future of it","Prediction"],["Craziest story","Story hook"],["What experts know","Authority / education"]];
- return `<div class="output-section"><h4>💡 12 CONTENT IDEAS</h4>${a.map((x,i)=>point(i+1,x[0]+" — "+topic,"",`Angle: ${x[1]}`)).join("")}</div>`;
+
+async function copyResult(){
+if(!lastText)return;
+try{
+await navigator.clipboard.writeText(lastText);
+alert("✅ Copied!");
+}catch(e){
+alert("Select and copy the generated text.");
 }
-function createEngine(topic){
- return `<div class="output-section"><h4>🚀 VIRAL CONTENT PACKAGE</h4><div class="hook-box">${getHook(topic,"viral")}</div></div>
- <div class="output-section"><h4>🏷️ TITLE</h4><p>5 Things About ${capitalize(topic)} You Probably Didn't Know 🤯</p></div>
- <div class="output-section"><h4>🎬 STRUCTURE</h4>${point(1,"0–3 sec — Hook","Start with the strongest statement and an unusual visual.")}${point(2,"3–10 sec — Curiosity","Introduce the mystery or surprising question.")}${point(3,"10–45 sec — Value","Deliver the strongest facts or story beats with fast visual changes.")}${point(4,"45–55 sec — Reveal","Give the most surprising detail.")}${point(5,"55–60 sec — CTA","Ask a simple question that encourages comments.")}</div>
- <div class="output-section"><h4>💬 CAPTION</h4><p>You probably didn't know this about ${topic} 👀\n\nWhich part surprised you the most?\n\n👇 Tell me below.\n\nFollow for more.</p></div>
- <div class="output-section"><h4>#️⃣ HASHTAGS</h4><div class="tag-list"><span class="tag">#viral</span><span class="tag">#fyp</span><span class="tag">#shorts</span><span class="tag">#reels</span><span class="tag">#facts</span><span class="tag">#creator</span></div></div>`;
 }
-function createImage(topic){
- const prompt=`Cinematic vertical 9:16 image for a viral short-form video about "${topic}". Photorealistic, dramatic lighting, strong focal subject, high detail, modern social-media thumbnail composition, no watermark, no text.`;
- return `<div class="output-section"><h4>🖼️ AI IMAGE PROMPT</h4><div class="hook-box">${prompt}</div></div><div class="output-section"><h4>⚙️ $0 START MODE</h4><p>This button prepares a professional image prompt without charging you or exposing an API key. A real image-generation API can be connected later through a secure Vercel serverless route.</p></div><div class="output-section"><h4>📐 RECOMMENDED</h4><div class="tag-list"><span class="tag">9:16 vertical</span><span class="tag">High detail</span><span class="tag">Cinematic</span><span class="tag">No watermark</span></div></div>`;
+
+function saveResult(){
+if(!lastText)return;
+let blob=new Blob([lastText],{type:"text/plain"});
+let a=document.createElement("a");
+a.href=URL.createObjectURL(blob);
+a.download="ViralForge-Content.txt";
+a.click();
+URL.revokeObjectURL(a.href);
 }
-async function copyResult(){if(!lastResultText)return alert("Generate something first.");try{await navigator.clipboard.writeText(lastResultText);alert("✅ Copied!")}catch(e){const a=document.createElement("textarea");a.value=lastResultText;document.body.appendChild(a);a.select();document.execCommand("copy");a.remove();alert("✅ Copied!")}}
-function downloadResult(){if(!lastResultText)return alert("Generate something first.");const b=new Blob([lastResultText],{type:"text/plain;charset=utf-8"}),u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="ViralForge-Content.txt";a.click();URL.revokeObjectURL(u)}
-function showAbout(){alert("ViralForge AI — $0 Starter\\n\\n• Local content generator\\n• No paid API required\\n• Login UI demo\\n• AI Image prompt workflow\\n• Ready for secure API integration later\\n\\nYour site name remains ViralForge AI.")}
-function openLogin(){document.getElementById("loginModal").classList.add("show")}
-function closeLogin(){document.getElementById("loginModal").classList.remove("show")}
-function demoLogin(){const n=document.getElementById("loginName").value.trim()||"Creator";localStorage.setItem("vf_name",n);document.getElementById("avatar").textContent=n.slice(0,2).toUpperCase();closeLogin();alert("✅ Welcome, "+n+"! This is local demo login.")}
-const saved=localStorage.getItem("vf_name");if(saved)document.getElementById("avatar").textContent=saved.slice(0,2).toUpperCase();
-document.getElementById("topic").value="5 surprising facts about the human brain";
+
+function openImage(){
+document.getElementById("imagebox").classList.add("show");
+goGenerator();
+}
+
+function makeImagePrompt(){
+let p=document.getElementById("imageprompt").value.trim();
+if(!p){alert("Describe the image first.");return}
+document.getElementById("imagepreview").innerHTML=`
+<div>
+<div class="big">✨</div>
+<strong>Optimized AI Image Prompt</strong>
+<p style="margin-top:10px">${p}, cinematic composition, dramatic lighting, highly detailed, professional social media thumbnail, realistic, sharp focus, 9:16 vertical format.</p>
+<button class="action" style="margin-top:15px" onclick="navigator.clipboard.writeText(this.parentElement.querySelector('p').innerText);alert('✅ Prompt copied!')">📋 Copy Prompt</button>
+</div>`;
+}
+
+function openLogin(){
+document.getElementById("modal").classList.add("show");
+}
+function closeLogin(){
+document.getElementById("modal").classList.remove("show");
+}
+function demoLogin(){
+let email=document.getElementById("email").value.trim();
+if(!email){alert("Enter your email.");return}
+localStorage.setItem("viralforge_user",email);
+closeLogin();
+document.querySelector(".login").textContent="✓ "+email.split("@")[0];
+alert("✅ Demo login successful!");
+}
+
+function about(){
+alert("ViralForge AI turns one idea into scripts, hooks, titles, captions, content ideas and complete viral packages.\n\nThis $0 version works without an AI API. Real AI APIs can be connected later through a secure Vercel backend.");
+}
+
+window.addEventListener("load",()=>{
+let u=localStorage.getItem("viralforge_user");
+if(u)document.querySelector(".login").textContent="✓ "+u.split("@")[0];
+});
 </script>
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js").catch(() => {});
-  });
-}
-</script>
+
 </body>
-</html>
+  </html>
