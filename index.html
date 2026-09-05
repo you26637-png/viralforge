@@ -4,15 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#07070a">
-
+<meta name="description" content="ViralForge AI — Create content that goes viral.">
 <title>ViralForge AI — Create Content That Goes Viral</title>
 
 <style>
-
-/* =========================================================
-   GLOBAL
-========================================================= */
-
 *{
   box-sizing:border-box;
   margin:0;
@@ -21,15 +16,17 @@
 
 :root{
   --bg:#07070a;
+  --bg2:#0b0b10;
   --card:#111116;
   --card2:#15151c;
   --border:#292934;
-  --purple:#9b5cff;
+  --purple:#8b5cf6;
   --purple2:#c084fc;
   --pink:#ec4899;
   --text:#f7f7fa;
   --muted:#9999a8;
   --green:#22c55e;
+  --danger:#ef4444;
 }
 
 html{
@@ -39,14 +36,15 @@ html{
 body{
   font-family:Inter,Arial,Helvetica,sans-serif;
   background:
-    radial-gradient(
-      circle at 50% -10%,
-      rgba(155,92,255,.20),
-      transparent 35%
-    ),
+    radial-gradient(circle at 50% -15%,rgba(139,92,246,.22),transparent 34%),
+    radial-gradient(circle at 90% 30%,rgba(236,72,153,.07),transparent 25%),
     var(--bg);
   color:var(--text);
   min-height:100vh;
+}
+
+body.modal-open{
+  overflow:hidden;
 }
 
 button,
@@ -65,250 +63,181 @@ a{
   text-decoration:none;
 }
 
-
-/* =========================================================
+/* =====================================================
    HEADER
-========================================================= */
+===================================================== */
 
 .header{
   position:sticky;
   top:0;
-  z-index:1000;
-
-  background:rgba(7,7,10,.84);
+  z-index:100;
+  background:rgba(7,7,10,.78);
   backdrop-filter:blur(20px);
-
+  -webkit-backdrop-filter:blur(20px);
   border-bottom:1px solid rgba(255,255,255,.07);
 }
 
 .nav{
   max-width:1180px;
-  height:72px;
   margin:auto;
-
+  height:74px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-
   padding:0 22px;
 }
 
-
-/* =========================================================
+/* =====================================================
    ANIMATED LOGO
-========================================================= */
+===================================================== */
 
 .logo{
   display:flex;
   align-items:center;
   gap:11px;
-
   font-size:21px;
   font-weight:900;
-
-  position:relative;
-  user-select:none;
-}
-
-
-/* logo icon */
-
-.logo-mark{
-  width:39px;
-  height:39px;
-
-  border-radius:12px;
-
-  display:grid;
-  place-items:center;
-
-  position:relative;
-
-  background:
-    linear-gradient(
-      135deg,
-      #7c3aed,
-      #a855f7,
-      #ec4899
-    );
-
-  box-shadow:
-    0 0 18px rgba(139,92,246,.55),
-    0 0 45px rgba(168,85,247,.18);
-
-  animation:
-    logoFloat 3s ease-in-out infinite,
-    logoGlow 2.2s ease-in-out infinite alternate;
-
-  overflow:hidden;
-}
-
-
-/* lightning / V */
-
-.logo-mark::before{
-  content:"⚡";
-
-  font-size:20px;
-
-  color:white;
-
-  filter:drop-shadow(
-    0 0 7px rgba(255,255,255,.8)
-  );
-
-  animation:logoSpin 5s linear infinite;
-}
-
-
-/* shiny moving layer */
-
-.logo-mark::after{
-  content:"";
-
-  position:absolute;
-
-  width:70px;
-  height:12px;
-
-  background:rgba(255,255,255,.28);
-
-  transform:rotate(-45deg);
-
-  left:-70px;
-
-  animation:logoShine 2.8s ease-in-out infinite;
-}
-
-
-.logo-text{
   letter-spacing:-.5px;
 }
 
-.logo-text span{
-  background:
-    linear-gradient(
-      90deg,
-      #c084fc,
-      #a855f7,
-      #ec4899
-    );
+.logo-mark{
+  position:relative;
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  flex-shrink:0;
+}
 
+.logo-core{
+  position:relative;
+  width:30px;
+  height:30px;
+  border-radius:10px;
+  background:linear-gradient(135deg,#7c3aed,#a855f7,#ec4899);
+  display:grid;
+  place-items:center;
+  box-shadow:
+    0 0 18px rgba(139,92,246,.55),
+    0 0 40px rgba(139,92,246,.18);
+  animation:logoPulse 2.4s ease-in-out infinite;
+  z-index:2;
+}
+
+.logo-core::before{
+  content:"V";
+  color:white;
+  font-size:17px;
+  font-weight:1000;
+  font-style:italic;
+}
+
+.logo-orbit{
+  position:absolute;
+  inset:0;
+  border:1.5px solid rgba(192,132,252,.55);
+  border-radius:50%;
+  transform:rotate(-25deg);
+  animation:orbit 4s linear infinite;
+}
+
+.logo-orbit::after{
+  content:"";
+  position:absolute;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#c084fc;
+  box-shadow:0 0 12px #c084fc;
+  top:-3px;
+  left:50%;
+}
+
+.logo-spark{
+  position:absolute;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:0 0 12px #fff;
+  right:0;
+  top:3px;
+  animation:spark 1.8s ease-in-out infinite;
+}
+
+.logo-text{
+  color:#fff;
+}
+
+.logo-text span{
+  background:linear-gradient(90deg,#c084fc,#8b5cf6,#ec4899);
   -webkit-background-clip:text;
   background-clip:text;
-
   color:transparent;
-
-  animation:textGlow 2s ease-in-out infinite alternate;
+  animation:gradientMove 4s ease infinite;
+  background-size:200% 100%;
 }
 
-
-@keyframes logoFloat{
-
+@keyframes logoPulse{
   0%,100%{
-    transform:translateY(0);
+    transform:scale(1);
   }
-
   50%{
-    transform:translateY(-3px);
+    transform:scale(1.08);
   }
-
 }
 
-
-@keyframes logoGlow{
-
+@keyframes orbit{
   from{
-    box-shadow:
-      0 0 15px rgba(139,92,246,.45),
-      0 0 30px rgba(168,85,247,.12);
+    transform:rotate(0deg);
   }
-
   to{
-    box-shadow:
-      0 0 25px rgba(168,85,247,.8),
-      0 0 55px rgba(236,72,153,.25);
+    transform:rotate(360deg);
   }
-
 }
 
-
-@keyframes logoSpin{
-
-  0%{
-    transform:rotate(0deg) scale(1);
+@keyframes spark{
+  0%,100%{
+    opacity:.25;
+    transform:scale(.7);
   }
-
   50%{
-    transform:rotate(8deg) scale(1.08);
+    opacity:1;
+    transform:scale(1.4);
   }
-
-  100%{
-    transform:rotate(0deg) scale(1);
-  }
-
 }
 
-
-@keyframes logoShine{
-
-  0%{
-    left:-70px;
+@keyframes gradientMove{
+  0%,100%{
+    background-position:0% 50%;
   }
-
-  55%,100%{
-    left:80px;
+  50%{
+    background-position:100% 50%;
   }
-
 }
 
-
-@keyframes textGlow{
-
-  from{
-    filter:drop-shadow(0 0 0 rgba(192,132,252,0));
-  }
-
-  to{
-    filter:drop-shadow(
-      0 0 8px rgba(192,132,252,.35)
-    );
-  }
-
-}
-
-
-/* =========================================================
+/* =====================================================
    NAVIGATION
-========================================================= */
+===================================================== */
 
 .nav-links{
   display:flex;
-  gap:8px;
+  gap:5px;
 }
 
 .nav-links button{
   background:none;
   border:0;
-
   color:#aaa;
-
-  padding:9px 12px;
-
+  padding:10px 13px;
   border-radius:10px;
-
   transition:.2s;
 }
 
 .nav-links button:hover{
   background:#17171f;
-  color:white;
+  color:#fff;
 }
-
-
-/* =========================================================
-   ACCOUNT AREA
-========================================================= */
 
 .account-area{
   display:flex;
@@ -316,1011 +245,730 @@ a{
   gap:10px;
 }
 
-
 .login-btn{
-  border:1px solid #3b2b55;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(124,58,237,.18),
-      rgba(168,85,247,.08)
-    );
-
-  color:#ddd;
-
+  border:1px solid #393544;
+  background:rgba(255,255,255,.04);
+  color:#fff;
   padding:10px 17px;
-
   border-radius:11px;
-
-  font-size:14px;
   font-weight:800;
-
   transition:.2s;
 }
 
 .login-btn:hover{
-  transform:translateY(-2px);
-
-  border-color:#9b5cff;
-
-  box-shadow:
-    0 8px 25px rgba(124,58,237,.2);
-
-  color:white;
+  border-color:#8b5cf6;
+  background:rgba(139,92,246,.12);
+  transform:translateY(-1px);
 }
 
+.avatar{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  font-weight:900;
+  background:linear-gradient(135deg,#7c3aed,#ec4899);
+  box-shadow:0 0 18px rgba(139,92,246,.22);
+  border:1px solid rgba(255,255,255,.12);
+}
 
 .user-menu{
   display:none;
-  align-items:center;
-  gap:9px;
 }
 
-
-.avatar{
-  width:40px;
-  height:40px;
-
-  border-radius:50%;
-
-  display:grid;
-  place-items:center;
-
-  font-weight:900;
-
-  background:
-    linear-gradient(
-      135deg,
-      #7c3aed,
-      #ec4899
-    );
-
-  box-shadow:
-    0 0 15px rgba(139,92,246,.3);
-}
-
-
-.logout-btn{
-  border:1px solid #30303b;
-  background:#15151b;
-  color:#bbb;
-
-  padding:8px 11px;
-
-  border-radius:9px;
-
-  font-size:12px;
-  font-weight:700;
-}
-
-.logout-btn:hover{
-  color:white;
-  background:#20202a;
-}
-
-
-/* =========================================================
+/* =====================================================
    HERO
-========================================================= */
+===================================================== */
 
 .hero{
   max-width:1050px;
-
   margin:auto;
-
-  padding:75px 20px 45px;
-
+  padding:78px 20px 48px;
   text-align:center;
 }
 
-
 .badge{
   display:inline-flex;
-
   align-items:center;
-  gap:8px;
-
-  padding:9px 15px;
-
+  gap:9px;
+  padding:9px 16px;
   border:1px solid rgba(192,132,252,.3);
-
   background:rgba(139,92,246,.09);
-
   border-radius:999px;
-
   color:#d8b4fe;
-
   font-size:13px;
-  font-weight:700;
-
+  font-weight:800;
   margin-bottom:25px;
-
-  animation:badgePulse 2.5s ease-in-out infinite;
+  box-shadow:0 0 30px rgba(139,92,246,.08);
 }
 
-
-@keyframes badgePulse{
-
-  0%,100%{
-    box-shadow:0 0 0 rgba(155,92,255,0);
-  }
-
-  50%{
-    box-shadow:
-      0 0 25px rgba(155,92,255,.12);
-  }
-
+.badge-dot{
+  width:7px;
+  height:7px;
+  background:#22c55e;
+  border-radius:50%;
+  box-shadow:0 0 10px #22c55e;
+  animation:blink 1.5s infinite;
 }
 
+@keyframes blink{
+  0%,100%{opacity:.4}
+  50%{opacity:1}
+}
 
 .hero h1{
   font-size:clamp(44px,8vw,78px);
-
   line-height:.98;
-
-  letter-spacing:-3px;
-
-  font-weight:900;
-
-  max-width:850px;
-
+  letter-spacing:-4px;
+  font-weight:950;
+  max-width:900px;
   margin:auto;
 }
 
-
 .gradient{
-  background:
-    linear-gradient(
-      90deg,
-      #fff,
-      #c084fc,
-      #8b5cf6,
-      #ec4899
-    );
-
+  background:linear-gradient(90deg,#fff,#c084fc,#8b5cf6,#ec4899);
   background-size:200% auto;
-
   -webkit-background-clip:text;
   background-clip:text;
-
   color:transparent;
-
-  animation:gradientMove 4s linear infinite;
+  animation:gradientMove 5s ease infinite;
 }
-
-
-@keyframes gradientMove{
-
-  to{
-    background-position:200% center;
-  }
-
-}
-
 
 .hero p{
   max-width:720px;
-
   margin:25px auto 0;
-
   color:#a1a1ad;
-
   font-size:19px;
-
   line-height:1.7;
 }
 
-
-/* =========================================================
+/* =====================================================
    TOOL GRID
-========================================================= */
+===================================================== */
 
 .tools{
   max-width:1120px;
-
   margin:20px auto 0;
-
   padding:0 20px;
 }
-
 
 .tool-grid{
   display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
+  grid-template-columns:repeat(3,1fr);
   gap:16px;
 }
 
-
 .tool-card{
   position:relative;
-
   overflow:hidden;
-
   min-height:185px;
-
   padding:25px;
-
-  background:
-    linear-gradient(
-      145deg,
-      #15151b,
-      #0f0f14
-    );
-
+  background:linear-gradient(145deg,#15151b,#0f0f14);
   border:1px solid #292934;
-
   border-radius:22px;
-
-  transition:.25s;
+  transition:.28s;
 }
-
 
 .tool-card::before{
   content:"";
-
   position:absolute;
-
-  width:120px;
-  height:120px;
-
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  background:rgba(139,92,246,.08);
+  filter:blur(30px);
   right:-60px;
-  top:-60px;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(155,92,255,.18),
-      transparent 70%
-    );
-
-  pointer-events:none;
-}
-
-
-.tool-card:hover{
-  transform:translateY(-4px);
-
-  border-color:#7040b7;
-
-  box-shadow:
-    0 15px 45px rgba(0,0,0,.3);
-}
-
-
-.tool-card.active{
-  border-color:#9b5cff;
-
-  box-shadow:
-    0 0 0 1px rgba(155,92,255,.15),
-    0 15px 50px rgba(115,55,190,.12);
-}
-
-
-.tool-icon{
-  font-size:34px;
-
-  margin-bottom:18px;
-
+  top:-70px;
   transition:.3s;
 }
 
-
-.tool-card:hover .tool-icon{
-  transform:
-    scale(1.15)
-    rotate(-5deg);
+.tool-card:hover{
+  transform:translateY(-5px);
+  border-color:#7040b7;
+  box-shadow:0 18px 50px rgba(0,0,0,.35);
 }
 
+.tool-card:hover::before{
+  background:rgba(139,92,246,.18);
+}
+
+.tool-card.active{
+  border-color:#9b5cff;
+  box-shadow:
+    0 0 0 1px rgba(155,92,255,.15),
+    0 15px 50px rgba(115,55,190,.14);
+}
+
+.tool-icon{
+  font-size:34px;
+  margin-bottom:18px;
+  position:relative;
+}
 
 .tool-card h3{
   font-size:23px;
-
   margin-bottom:9px;
+  position:relative;
 }
-
 
 .tool-card p{
   color:#8f8f9b;
-
   line-height:1.5;
+  position:relative;
 }
 
-
-/* =========================================================
+/* =====================================================
    GENERATOR
-========================================================= */
+===================================================== */
 
 .generator{
   max-width:1050px;
-
   margin:55px auto 100px;
-
   padding:0 20px;
 }
 
-
 .panel{
-  background:
-    linear-gradient(
-      145deg,
-      #121218,
-      #0d0d12
-    );
-
+  background:linear-gradient(145deg,#121218,#0d0d12);
   border:1px solid #292933;
-
   border-radius:26px;
-
   overflow:hidden;
-
-  box-shadow:
-    0 25px 80px rgba(0,0,0,.18);
+  box-shadow:0 30px 80px rgba(0,0,0,.25);
 }
-
 
 .panel-head{
   padding:25px;
-
   border-bottom:1px solid #26262f;
-
   display:flex;
-
   align-items:center;
-
   justify-content:space-between;
-
   gap:15px;
 }
 
-
 .panel-title{
   display:flex;
-
   align-items:center;
-
   gap:12px;
 }
 
+.panel-title>span{
+  font-size:27px;
+}
 
 .panel-title h2{
   font-size:23px;
 }
 
-
 .small-label{
   color:#9a9aa8;
-
   font-size:13px;
-
   margin-top:4px;
 }
 
-
 .status{
   display:flex;
-
   align-items:center;
-
   gap:7px;
-
   color:#9d9daa;
-
   font-size:13px;
 }
-
 
 .status-dot{
   width:8px;
   height:8px;
-
   background:#22c55e;
-
   border-radius:50%;
-
-  box-shadow:
-    0 0 10px rgba(34,197,94,.7);
-
-  animation:statusPulse 1.5s infinite;
+  box-shadow:0 0 9px rgba(34,197,94,.6);
 }
 
-
-@keyframes statusPulse{
-
-  50%{
-    opacity:.45;
-    transform:scale(.75);
-  }
-
-}
-
-
-/* =========================================================
+/* =====================================================
    FORM
-========================================================= */
+===================================================== */
 
 .form{
   padding:25px;
 }
 
-
 .field{
   margin-bottom:20px;
 }
 
-
 .field label{
   display:block;
-
   font-size:14px;
-
-  font-weight:700;
-
+  font-weight:750;
   margin-bottom:9px;
 }
-
 
 textarea,
 input,
 select{
   width:100%;
-
-  color:white;
-
+  color:#fff;
   background:#0a0a0e;
-
   border:1px solid #2a2a35;
-
   border-radius:14px;
-
   outline:none;
-
   padding:15px;
-
   transition:.2s;
 }
 
+textarea::placeholder,
+input::placeholder{
+  color:#646470;
+}
 
 textarea{
   min-height:125px;
-
   resize:vertical;
-
   line-height:1.55;
 }
-
 
 textarea:focus,
 input:focus,
 select:focus{
   border-color:#8b5cf6;
-
-  box-shadow:
-    0 0 0 3px rgba(139,92,246,.1);
+  box-shadow:0 0 0 3px rgba(139,92,246,.1);
 }
-
 
 select{
   appearance:auto;
 }
 
-
 .options{
   display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
+  grid-template-columns:repeat(3,1fr);
   gap:14px;
 }
 
-
 .generate{
   width:100%;
-
   border:0;
-
   border-radius:14px;
-
   padding:17px;
-
   font-size:16px;
-
-  font-weight:800;
-
-  color:white;
-
-  background:
-    linear-gradient(
-      135deg,
-      #7c3aed,
-      #a855f7
-    );
-
-  box-shadow:
-    0 10px 30px rgba(124,58,237,.22);
-
+  font-weight:850;
+  color:#fff;
+  background:linear-gradient(135deg,#7c3aed,#a855f7,#ec4899);
+  background-size:200% 100%;
+  box-shadow:0 10px 30px rgba(124,58,237,.22);
   transition:.2s;
+  animation:buttonGradient 5s ease infinite;
 }
-
 
 .generate:hover{
   transform:translateY(-2px);
-
-  box-shadow:
-    0 14px 35px rgba(124,58,237,.3);
+  box-shadow:0 15px 40px rgba(124,58,237,.32);
 }
-
 
 .generate:active{
   transform:scale(.99);
 }
 
+@keyframes buttonGradient{
+  0%,100%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+}
 
-/* =========================================================
+/* =====================================================
    RESULT
-========================================================= */
+===================================================== */
 
 .result{
   display:none;
-
   border-top:1px solid #282832;
-
   background:#0b0b10;
 }
-
 
 .result.show{
   display:block;
 }
 
-
 .result-head{
   padding:22px 25px;
-
   display:flex;
-
   justify-content:space-between;
-
   align-items:center;
-
   border-bottom:1px solid #282832;
-
   gap:15px;
 }
-
 
 .result-head h3{
   font-size:19px;
 }
 
-
 .result-actions{
   display:flex;
-
   gap:8px;
 }
 
-
 .action-btn{
   border:1px solid #30303b;
-
   background:#15151b;
-
   color:#ddd;
-
   border-radius:10px;
-
   padding:10px 14px;
-
   font-size:13px;
-
   font-weight:700;
+  transition:.2s;
 }
-
 
 .action-btn:hover{
   background:#20202a;
-
   color:white;
+  border-color:#555565;
 }
-
 
 .output{
   padding:30px 25px 35px;
 }
 
-
 .output-section{
   margin-bottom:30px;
 }
-
 
 .output-section:last-child{
   margin-bottom:0;
 }
 
-
 .output-section h4{
   font-size:14px;
-
   letter-spacing:.5px;
-
   color:#c084fc;
-
   margin-bottom:12px;
 }
 
-
 .output-section p{
   color:#d6d6de;
-
   font-size:16px;
-
   line-height:1.75;
-
   white-space:pre-wrap;
 }
 
-
 .hook-box{
   border:1px solid #422275;
-
-  background:
-    linear-gradient(
-      145deg,
-      #17101f,
-      #100c15
-    );
-
+  background:linear-gradient(145deg,#17101f,#100c15);
   border-radius:16px;
-
   padding:19px;
-
   font-size:18px;
-
   line-height:1.6;
-
   color:#f4eaff;
+  box-shadow:0 10px 40px rgba(139,92,246,.07);
 }
-
 
 .script-point{
   display:flex;
-
   gap:14px;
-
   padding:17px;
-
   margin-bottom:10px;
-
   border:1px solid #252530;
-
   background:#111117;
-
   border-radius:15px;
+  transition:.2s;
 }
 
+.script-point:hover{
+  border-color:#3b3b4c;
+  transform:translateX(2px);
+}
 
 .number{
   min-width:34px;
-
   height:34px;
-
   border-radius:10px;
-
   display:grid;
-
   place-items:center;
-
-  background:#7c3aed;
-
+  background:linear-gradient(135deg,#7c3aed,#a855f7);
   font-weight:900;
 }
 
-
 .point-content{
   flex:1;
+  line-height:1.6;
 }
-
 
 .point-content strong{
   display:block;
-
   margin-bottom:6px;
 }
 
-
 .visual{
   margin-top:10px;
-
   color:#9696a4;
-
   font-size:13px;
 }
-
 
 .tag-list{
   display:flex;
-
   flex-wrap:wrap;
-
   gap:8px;
 }
 
-
 .tag{
   background:#171720;
-
   border:1px solid #2b2b37;
-
   padding:8px 11px;
-
   border-radius:999px;
-
   color:#bbb;
-
   font-size:13px;
 }
 
-
-/* =========================================================
+/* =====================================================
    LOADING
-========================================================= */
+===================================================== */
 
 .loading{
   display:none;
-
-  padding:35px;
-
+  padding:45px 25px;
   text-align:center;
 }
-
 
 .loading.show{
   display:block;
 }
 
-
 .spinner{
-  width:34px;
-
-  height:34px;
-
+  width:38px;
+  height:38px;
   border:3px solid #2a2036;
-
   border-top-color:#a855f7;
-
+  border-right-color:#ec4899;
   border-radius:50%;
-
   animation:spin .8s linear infinite;
-
-  margin:0 auto 14px;
+  margin:0 auto 16px;
 }
 
-
 @keyframes spin{
-
   to{
     transform:rotate(360deg);
   }
-
 }
 
-
-/* =========================================================
+/* =====================================================
    LOGIN MODAL
-========================================================= */
+===================================================== */
 
-.modal{
+.modal-overlay{
   position:fixed;
-
   inset:0;
-
-  z-index:3000;
-
+  z-index:999;
   display:none;
-
   align-items:center;
-
   justify-content:center;
-
   padding:20px;
-
-  background:
-    rgba(0,0,0,.72);
-
+  background:rgba(0,0,0,.72);
   backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
 }
 
-
-.modal.show{
+.modal-overlay.show{
   display:flex;
-
-  animation:modalFade .2s ease;
+  animation:fadeIn .2s ease;
 }
 
+@keyframes fadeIn{
+  from{opacity:0}
+  to{opacity:1}
+}
 
-@keyframes modalFade{
+.login-modal{
+  width:min(440px,100%);
+  position:relative;
+  background:linear-gradient(145deg,#17171e,#0e0e13);
+  border:1px solid #343440;
+  border-radius:25px;
+  padding:30px;
+  box-shadow:
+    0 30px 100px rgba(0,0,0,.6),
+    0 0 60px rgba(139,92,246,.1);
+  animation:modalUp .25s ease;
+}
 
+@keyframes modalUp{
   from{
     opacity:0;
+    transform:translateY(15px) scale(.97);
   }
-
   to{
     opacity:1;
+    transform:translateY(0) scale(1);
   }
-
 }
-
-
-.login-box{
-  width:100%;
-
-  max-width:430px;
-
-  padding:30px;
-
-  position:relative;
-
-  background:
-    linear-gradient(
-      145deg,
-      #17171e,
-      #0d0d12
-    );
-
-  border:1px solid #343442;
-
-  border-radius:24px;
-
-  box-shadow:
-    0 30px 100px rgba(0,0,0,.6);
-}
-
 
 .close-modal{
   position:absolute;
-
-  top:15px;
-  right:15px;
-
-  width:36px;
-  height:36px;
-
-  border:1px solid #30303b;
-
+  right:16px;
+  top:16px;
+  width:35px;
+  height:35px;
   border-radius:10px;
-
-  background:#111117;
-
+  border:1px solid #33333e;
+  background:#17171e;
   color:#aaa;
-
   font-size:20px;
 }
 
-
 .close-modal:hover{
-  color:white;
+  color:#fff;
 }
-
 
 .login-logo{
   display:flex;
-
   justify-content:center;
-
-  margin-bottom:18px;
+  margin-bottom:15px;
 }
 
-
-.login-box h2{
+.login-modal h2{
   text-align:center;
-
   font-size:27px;
-
   margin-bottom:7px;
 }
 
-
 .login-subtitle{
   text-align:center;
-
-  color:#888894;
-
+  color:#8f8f9d;
   font-size:14px;
-
-  margin-bottom:25px;
+  margin-bottom:24px;
 }
 
-
-.login-field{
-  margin-bottom:16px;
+.login-tabs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:5px;
+  background:#09090d;
+  border:1px solid #282832;
+  padding:4px;
+  border-radius:12px;
+  margin-bottom:20px;
 }
 
-
-.login-field label{
-  display:block;
-
-  margin-bottom:8px;
-
-  font-size:13px;
-
+.login-tab{
+  border:0;
+  background:transparent;
+  color:#888894;
+  padding:10px;
+  border-radius:9px;
   font-weight:700;
 }
 
+.login-tab.active{
+  background:#24202d;
+  color:#fff;
+}
 
-.login-submit{
+.auth-form .field{
+  margin-bottom:15px;
+}
+
+.auth-submit{
   width:100%;
-
   border:0;
-
-  border-radius:13px;
-
-  padding:15px;
-
-  color:white;
-
-  font-weight:800;
-
-  background:
-    linear-gradient(
-      135deg,
-      #7c3aed,
-      #a855f7,
-      #ec4899
-    );
-
+  padding:14px;
+  border-radius:12px;
+  color:#fff;
+  font-weight:850;
+  background:linear-gradient(135deg,#7c3aed,#a855f7);
   margin-top:5px;
 }
 
-
-.login-submit:hover{
-  filter:brightness(1.12);
-
-  transform:translateY(-1px);
-}
-
-
-.login-note{
+.auth-message{
   text-align:center;
-
-  color:#666674;
-
-  font-size:11px;
-
-  line-height:1.5;
-
-  margin-top:15px;
+  color:#22c55e;
+  font-size:13px;
+  margin-top:12px;
+  min-height:18px;
 }
 
+.demo-note{
+  margin-top:17px;
+  text-align:center;
+  color:#666674;
+  font-size:11px;
+  line-height:1.5;
+}
 
-/* =========================================================
+/* =====================================================
+   USER DROPDOWN
+===================================================== */
+
+.account{
+  position:relative;
+}
+
+.avatar-btn{
+  border:0;
+  padding:0;
+  background:none;
+}
+
+.account-dropdown{
+  position:absolute;
+  right:0;
+  top:52px;
+  width:210px;
+  padding:8px;
+  background:#15151b;
+  border:1px solid #30303b;
+  border-radius:15px;
+  box-shadow:0 20px 50px rgba(0,0,0,.4);
+  display:none;
+}
+
+.account-dropdown.show{
+  display:block;
+}
+
+.account-name{
+  padding:10px;
+  border-bottom:1px solid #292932;
+  margin-bottom:5px;
+}
+
+.account-name strong{
+  display:block;
+  font-size:14px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.account-name span{
+  color:#777783;
+  font-size:11px;
+}
+
+.dropdown-btn{
+  width:100%;
+  text-align:left;
+  background:none;
+  border:0;
+  color:#bbb;
+  padding:10px;
+  border-radius:9px;
+}
+
+.dropdown-btn:hover{
+  background:#22222b;
+  color:#fff;
+}
+
+/* =====================================================
    FOOTER
-========================================================= */
+===================================================== */
 
 footer{
   text-align:center;
-
   padding:30px 20px 45px;
-
   color:#666674;
-
   font-size:13px;
 }
-
 
 footer strong{
   color:#9d6ce7;
 }
 
-
-/* =========================================================
+/* =====================================================
    MOBILE
-========================================================= */
+===================================================== */
 
 @media(max-width:800px){
 
@@ -1341,21 +989,23 @@ footer strong{
   }
 
   .tool-grid{
-    grid-template-columns:
-      repeat(2,1fr);
+    grid-template-columns:repeat(2,1fr);
   }
 
   .options{
     grid-template-columns:1fr;
   }
 
+  .login-btn{
+    padding:9px 13px;
+  }
 }
-
 
 @media(max-width:520px){
 
   .nav{
     padding:0 14px;
+    height:68px;
   }
 
   .logo{
@@ -1364,28 +1014,17 @@ footer strong{
   }
 
   .logo-mark{
-    width:34px;
-    height:34px;
-    border-radius:10px;
+    width:36px;
+    height:36px;
   }
 
-  .logo-mark::before{
-    font-size:17px;
+  .logo-core{
+    width:26px;
+    height:26px;
   }
 
-  .login-btn{
-    padding:8px 12px;
-    font-size:12px;
-  }
-
-  .logout-btn{
-    display:none;
-  }
-
-  .avatar{
-    width:35px;
-    height:35px;
-    font-size:12px;
+  .logo-core::before{
+    font-size:15px;
   }
 
   .hero{
@@ -1417,9 +1056,7 @@ footer strong{
 
   .result-head{
     padding:18px;
-
     align-items:flex-start;
-
     flex-direction:column;
   }
 
@@ -1439,33 +1076,30 @@ footer strong{
     font-size:45px;
   }
 
-  .login-box{
+  .login-modal{
     padding:24px 20px;
   }
-
 }
-
 </style>
 </head>
 
-
 <body>
 
-
-<!-- =========================================================
+<!-- =====================================================
      HEADER
-========================================================= -->
+===================================================== -->
 
 <header class="header">
 
 <nav class="nav">
 
-
-  <!-- ANIMATED LOGO -->
-
   <div class="logo">
 
-    <div class="logo-mark"></div>
+    <div class="logo-mark">
+      <div class="logo-orbit"></div>
+      <div class="logo-core"></div>
+      <div class="logo-spark"></div>
+    </div>
 
     <div class="logo-text">
       ViralForge <span>AI</span>
@@ -1473,8 +1107,6 @@ footer strong{
 
   </div>
 
-
-  <!-- NAV -->
 
   <div class="nav-links">
 
@@ -1489,253 +1121,169 @@ footer strong{
   </div>
 
 
-  <!-- ACCOUNT -->
-
-  <div class="account-area">
+  <div class="account-area" id="accountArea">
 
     <button
       class="login-btn"
       id="loginButton"
-      onclick="openLogin()"
-    >
-      🔐 Login
+      onclick="openLogin()">
+      Log in
     </button>
 
-
-    <div
-      class="user-menu"
-      id="userMenu"
-    >
-
-      <div
-        class="avatar"
-        id="userAvatar"
-      >
-        VF
-      </div>
-
-      <button
-        class="logout-btn"
-        onclick="logout()"
-      >
-        Logout
-      </button>
-
-    </div>
-
   </div>
-
 
 </nav>
 
 </header>
 
 
-
-<!-- =========================================================
-     MAIN
-========================================================= -->
+<!-- =====================================================
+     HERO
+===================================================== -->
 
 <main>
-
 
 <section class="hero">
 
   <div class="badge">
-    ✨ AI CREATOR ENGINE
+    <span class="badge-dot"></span>
+    AI CREATOR ENGINE
   </div>
 
-
   <h1>
-
     Create content that
-
-    <span class="gradient">
-      goes viral.
-    </span>
-
+    <span class="gradient">goes viral.</span>
   </h1>
 
-
   <p>
-
     Generate powerful scripts, scroll-stopping hooks,
     viral titles, captions and content ideas in seconds.
-
   </p>
 
 </section>
 
 
-
-<!-- =========================================================
+<!-- =====================================================
      TOOLS
-========================================================= -->
+===================================================== -->
 
 <section class="tools">
 
-<div class="tool-grid">
+  <div class="tool-grid">
 
+    <div
+      class="tool-card active"
+      data-tool="script"
+      onclick="selectTool('script')">
 
-  <div
-    class="tool-card active"
-    data-tool="script"
-    onclick="selectTool('script')"
-  >
+      <div class="tool-icon">✍️</div>
 
-    <div class="tool-icon">
-      ✍️
+      <h3>Script Generator</h3>
+
+      <p>
+        Create engaging 45–60 second video scripts.
+      </p>
+
     </div>
 
-    <h3>
-      Script Generator
-    </h3>
 
-    <p>
-      Create engaging 45–60 second video scripts.
-    </p>
+    <div
+      class="tool-card"
+      data-tool="hooks"
+      onclick="selectTool('hooks')">
 
-  </div>
+      <div class="tool-icon">🪝</div>
 
+      <h3>Viral Hooks</h3>
 
+      <p>
+        Stop the scroll with powerful opening lines.
+      </p>
 
-  <div
-    class="tool-card"
-    data-tool="hooks"
-    onclick="selectTool('hooks')"
-  >
-
-    <div class="tool-icon">
-      🪝
     </div>
 
-    <h3>
-      Viral Hooks
-    </h3>
 
-    <p>
-      Stop the scroll with powerful opening lines.
-    </p>
+    <div
+      class="tool-card"
+      data-tool="titles"
+      onclick="selectTool('titles')">
 
-  </div>
+      <div class="tool-icon">🏷️</div>
 
+      <h3>Titles</h3>
 
+      <p>
+        Generate high-click video titles.
+      </p>
 
-  <div
-    class="tool-card"
-    data-tool="titles"
-    onclick="selectTool('titles')"
-  >
-
-    <div class="tool-icon">
-      🏷️
     </div>
 
-    <h3>
-      Titles
-    </h3>
 
-    <p>
-      Generate high-click video titles.
-    </p>
+    <div
+      class="tool-card"
+      data-tool="captions"
+      onclick="selectTool('captions')">
 
-  </div>
+      <div class="tool-icon">💬</div>
 
+      <h3>Captions</h3>
 
+      <p>
+        Captions designed for engagement.
+      </p>
 
-  <div
-    class="tool-card"
-    data-tool="captions"
-    onclick="selectTool('captions')"
-  >
-
-    <div class="tool-icon">
-      💬
     </div>
 
-    <h3>
-      Captions
-    </h3>
 
-    <p>
-      Captions designed for engagement.
-    </p>
+    <div
+      class="tool-card"
+      data-tool="ideas"
+      onclick="selectTool('ideas')">
 
-  </div>
+      <div class="tool-icon">💡</div>
 
+      <h3>Ideas</h3>
 
+      <p>
+        Never run out of content ideas.
+      </p>
 
-  <div
-    class="tool-card"
-    data-tool="ideas"
-    onclick="selectTool('ideas')"
-  >
-
-    <div class="tool-icon">
-      💡
     </div>
 
-    <h3>
-      Ideas
-    </h3>
 
-    <p>
-      Never run out of content ideas.
-    </p>
+    <div
+      class="tool-card"
+      data-tool="engine"
+      onclick="selectTool('engine')">
 
-  </div>
+      <div class="tool-icon">🚀</div>
 
+      <h3>Viral Engine</h3>
 
+      <p>
+        Build a complete content package.
+      </p>
 
-  <div
-    class="tool-card"
-    data-tool="engine"
-    onclick="selectTool('engine')"
-  >
-
-    <div class="tool-icon">
-      🚀
     </div>
 
-    <h3>
-      Viral Engine
-    </h3>
-
-    <p>
-      Build a complete content package.
-    </p>
-
   </div>
-
-
-</div>
 
 </section>
 
 
-
-<!-- =========================================================
+<!-- =====================================================
      GENERATOR
-========================================================= -->
+===================================================== -->
 
-<section
-  class="generator"
-  id="generator"
->
-
+<section class="generator" id="generator">
 
 <div class="panel">
 
-
   <div class="panel-head">
-
 
     <div class="panel-title">
 
-      <span id="panelEmoji">
-        ✍️
-      </span>
-
+      <span id="panelEmoji">✍️</span>
 
       <div>
 
@@ -1745,9 +1293,10 @@ footer strong{
 
         <div
           class="small-label"
-          id="panelDescription"
-        >
+          id="panelDescription">
+
           Create an engaging 45–60 second short-form video script.
+
         </div>
 
       </div>
@@ -1758,25 +1307,22 @@ footer strong{
     <div class="status">
 
       <span class="status-dot"></span>
-
       Ready
 
     </div>
 
-
   </div>
 
 
+  <!-- FORM -->
 
   <div class="form">
-
 
     <div class="field">
 
       <label for="topic">
         What is your video about?
       </label>
-
 
       <textarea
         id="topic"
@@ -1786,16 +1332,13 @@ footer strong{
     </div>
 
 
-
     <div class="options">
-
 
       <div class="field">
 
         <label for="platform">
           Platform
         </label>
-
 
         <select id="platform">
 
@@ -1820,13 +1363,11 @@ footer strong{
       </div>
 
 
-
       <div class="field">
 
         <label for="tone">
           Tone
         </label>
-
 
         <select id="tone">
 
@@ -1859,13 +1400,11 @@ footer strong{
       </div>
 
 
-
       <div class="field">
 
         <label for="style">
           Content Style
         </label>
-
 
         <select id="style">
 
@@ -1893,29 +1432,25 @@ footer strong{
 
       </div>
 
-
     </div>
-
 
 
     <button
       class="generate"
-      onclick="generateContent()"
-    >
+      onclick="generateContent()">
 
       ✨ Generate with ViralForge AI
 
     </button>
 
-
   </div>
 
 
+  <!-- LOADING -->
 
   <div
     class="loading"
-    id="loading"
-  >
+    id="loading">
 
     <div class="spinner"></div>
 
@@ -1930,12 +1465,11 @@ footer strong{
   </div>
 
 
+  <!-- RESULT -->
 
   <div
     class="result"
-    id="result"
-  >
-
+    id="result">
 
     <div class="result-head">
 
@@ -1943,30 +1477,30 @@ footer strong{
         ✨ AI Generated Result
       </h3>
 
-
       <div class="result-actions">
 
         <button
           class="action-btn"
-          onclick="copyResult()"
-        >
+          onclick="copyResult()">
+
           📋 Copy
-        </button>
 
+        </button>
 
         <button
           class="action-btn"
-          onclick="downloadResult()"
-        >
+          onclick="downloadResult()">
+
           ↓ Save
-        </button>
 
+        </button>
 
         <button
           class="action-btn"
-          onclick="generateContent()"
-        >
+          onclick="generateContent()">
+
           🔄 Regenerate
+
         </button>
 
       </div>
@@ -1976,12 +1510,10 @@ footer strong{
 
     <div
       class="output"
-      id="output"
-    ></div>
-
+      id="output">
+    </div>
 
   </div>
-
 
 </div>
 
@@ -1990,185 +1522,218 @@ footer strong{
 </main>
 
 
-
-<!-- =========================================================
-     FOOTER
-========================================================= -->
-
 <footer>
 
   Built with
   <strong>ViralForge AI</strong>
-  — Create. Optimize. Go viral.
+  —
+  Create. Optimize. Go viral.
 
 </footer>
 
 
-
-<!-- =========================================================
+<!-- =====================================================
      LOGIN MODAL
-========================================================= -->
+===================================================== -->
 
 <div
-  class="modal"
+  class="modal-overlay"
   id="loginModal"
-  onclick="closeModalOutside(event)"
->
+  onclick="closeLoginOutside(event)">
 
-
-  <div class="login-box">
-
+  <div class="login-modal">
 
     <button
       class="close-modal"
-      onclick="closeLogin()"
-    >
+      onclick="closeLogin()">
+
       ×
+
     </button>
 
 
     <div class="login-logo">
 
-      <div class="logo-mark"></div>
+      <div class="logo-mark">
+
+        <div class="logo-orbit"></div>
+
+        <div class="logo-core"></div>
+
+        <div class="logo-spark"></div>
+
+      </div>
 
     </div>
 
 
-    <h2>
-      Welcome to ViralForge
+    <h2 id="authTitle">
+      Welcome back
     </h2>
 
-
     <div class="login-subtitle">
-      Login to your creator workspace
+      Log in to your ViralForge account
     </div>
 
 
-    <div class="login-field">
+    <div class="login-tabs">
 
-      <label for="loginEmail">
-        Email
-      </label>
+      <button
+        class="login-tab active"
+        id="loginTab"
+        onclick="switchAuth('login')">
 
-      <input
-        id="loginEmail"
-        type="email"
-        placeholder="you@example.com"
-      >
+        Log in
 
-    </div>
+      </button>
 
+      <button
+        class="login-tab"
+        id="signupTab"
+        onclick="switchAuth('signup')">
 
-    <div class="login-field">
+        Sign up
 
-      <label for="loginPassword">
-        Password
-      </label>
-
-      <input
-        id="loginPassword"
-        type="password"
-        placeholder="Enter your password"
-      >
+      </button>
 
     </div>
 
 
-    <button
-      class="login-submit"
-      onclick="loginUser()"
-    >
+    <form
+      class="auth-form"
+      id="authForm"
+      onsubmit="handleAuth(event)">
 
-      🚀 Login to ViralForge
+      <div class="field">
 
-    </button>
+        <label for="authEmail">
+          Email
+        </label>
+
+        <input
+          type="email"
+          id="authEmail"
+          placeholder="you@example.com"
+          required>
+
+      </div>
 
 
-    <div class="login-note">
+      <div class="field">
 
-      Demo front-end login.
-      Your information is stored only in this browser.
+        <label for="authPassword">
+          Password
+        </label>
+
+        <input
+          type="password"
+          id="authPassword"
+          placeholder="••••••••"
+          minlength="4"
+          required>
+
+      </div>
+
+
+      <button
+        class="auth-submit"
+        id="authSubmit"
+        type="submit">
+
+        Log in
+
+      </button>
+
+
+      <div
+        class="auth-message"
+        id="authMessage">
+      </div>
+
+    </form>
+
+
+    <div class="demo-note">
+
+      Demo authentication for this front-end version.
+      Your account is stored only in this browser.
 
     </div>
-
 
   </div>
 
 </div>
 
 
-
 <script>
 
-/* =========================================================
-   VIRALFORGE AI
-========================================================= */
+/* =====================================================
+   VIRALFORGE
+===================================================== */
 
 let currentTool = "script";
-
 let lastResultText = "";
+let authMode = "login";
 
 
-/* =========================================================
+/* =====================================================
    TOOL CONFIGURATION
-========================================================= */
+===================================================== */
 
 const tools = {
 
   script:{
     emoji:"✍️",
     title:"Script Generator",
-    description:
-      "Create an engaging 45–60 second short-form video script."
+    description:"Create an engaging 45–60 second short-form video script."
   },
 
   hooks:{
     emoji:"🪝",
     title:"Viral Hooks",
-    description:
-      "Generate powerful opening lines designed to stop the scroll."
+    description:"Generate powerful opening lines designed to stop the scroll."
   },
 
   titles:{
     emoji:"🏷️",
     title:"Viral Titles",
-    description:
-      "Generate high-click titles for your video."
+    description:"Generate high-click titles for your video."
   },
 
   captions:{
     emoji:"💬",
     title:"Captions",
-    description:
-      "Create captions designed to encourage comments and shares."
+    description:"Create captions designed to encourage comments and shares."
   },
 
   ideas:{
     emoji:"💡",
     title:"Content Ideas",
-    description:
-      "Generate fresh content angles around your topic."
+    description:"Generate fresh content angles around your topic."
   },
 
   engine:{
     emoji:"🚀",
     title:"Viral Engine",
-    description:
-      "Create a complete viral content package."
+    description:"Create a complete viral content package."
   }
 
 };
 
 
-/* =========================================================
+/* =====================================================
    LOGIN SYSTEM
-========================================================= */
+===================================================== */
 
 function openLogin(){
 
   document
     .getElementById("loginModal")
     .classList.add("show");
+
+  document.body.classList.add("modal-open");
+
+  document.getElementById("authEmail").focus();
 
 }
 
@@ -2179,10 +1744,14 @@ function closeLogin(){
     .getElementById("loginModal")
     .classList.remove("show");
 
+  document.body.classList.remove("modal-open");
+
+  document.getElementById("authMessage").textContent = "";
+
 }
 
 
-function closeModalOutside(event){
+function closeLoginOutside(event){
 
   if(event.target.id === "loginModal"){
     closeLogin();
@@ -2191,137 +1760,233 @@ function closeModalOutside(event){
 }
 
 
-function loginUser(){
+function switchAuth(mode){
+
+  authMode = mode;
+
+  const loginTab =
+    document.getElementById("loginTab");
+
+  const signupTab =
+    document.getElementById("signupTab");
+
+  const title =
+    document.getElementById("authTitle");
+
+  const subtitle =
+    document.querySelector(".login-subtitle");
+
+  const submit =
+    document.getElementById("authSubmit");
+
+  document
+    .getElementById("authMessage")
+    .textContent = "";
+
+  if(mode === "login"){
+
+    loginTab.classList.add("active");
+    signupTab.classList.remove("active");
+
+    title.textContent = "Welcome back";
+
+    subtitle.textContent =
+      "Log in to your ViralForge account";
+
+    submit.textContent = "Log in";
+
+  }else{
+
+    loginTab.classList.remove("active");
+    signupTab.classList.add("active");
+
+    title.textContent = "Create your account";
+
+    subtitle.textContent =
+      "Start creating viral content today";
+
+    submit.textContent = "Create account";
+
+  }
+
+}
+
+
+function handleAuth(event){
+
+  event.preventDefault();
 
   const email =
-    document
-      .getElementById("loginEmail")
+    document.getElementById("authEmail")
       .value
       .trim();
 
   const password =
-    document
-      .getElementById("loginPassword")
-      .value
-      .trim();
+    document.getElementById("authPassword")
+      .value;
 
-
-  if(!email){
-
-    alert("Please enter your email.");
-
+  if(!email || !password){
     return;
-
   }
 
-
-  if(!password){
-
-    alert("Please enter your password.");
-
-    return;
-
-  }
-
+  const user = {
+    email:email,
+    name:email.split("@")[0]
+  };
 
   localStorage.setItem(
-    "viralforge_user",
-    email
+    "viralforgeUser",
+    JSON.stringify(user)
   );
 
+  document.getElementById("authMessage")
+    .textContent =
+      authMode === "login"
+        ? "✅ Logged in successfully!"
+        : "✅ Account created!";
 
-  updateLoginUI();
+  setTimeout(()=>{
 
-  closeLogin();
+    closeLogin();
 
+    updateAccountUI();
 
-  alert(
-    "🎉 Welcome to ViralForge AI!"
-  );
+  },600);
 
 }
 
 
 function logout(){
 
-  localStorage.removeItem(
-    "viralforge_user"
-  );
+  localStorage.removeItem("viralforgeUser");
 
-  updateLoginUI();
-
-  alert(
-    "You have been logged out."
-  );
+  updateAccountUI();
 
 }
 
 
-function updateLoginUI(){
+function updateAccountUI(){
 
-  const email =
-    localStorage.getItem(
-      "viralforge_user"
-    );
+  const area =
+    document.getElementById("accountArea");
+
+  const saved =
+    localStorage.getItem("viralforgeUser");
+
+  if(!saved){
+
+    area.innerHTML = `
+      <button
+        class="login-btn"
+        onclick="openLogin()">
+        Log in
+      </button>
+    `;
+
+    return;
+
+  }
+
+  let user;
+
+  try{
+    user = JSON.parse(saved);
+  }catch{
+    localStorage.removeItem("viralforgeUser");
+    updateAccountUI();
+    return;
+  }
+
+  const initial =
+    (user.name || "U")
+      .charAt(0)
+      .toUpperCase();
+
+  area.innerHTML = `
+
+    <div class="account">
+
+      <button
+        class="avatar-btn"
+        onclick="toggleAccountMenu()">
+
+        <div class="avatar">
+          ${escapeHTML(initial)}
+        </div>
+
+      </button>
+
+      <div
+        class="account-dropdown"
+        id="accountDropdown">
+
+        <div class="account-name">
+
+          <strong>
+            ${escapeHTML(user.name)}
+          </strong>
+
+          <span>
+            ${escapeHTML(user.email)}
+          </span>
+
+        </div>
+
+        <button
+          class="dropdown-btn"
+          onclick="logout()">
+
+          🚪 Log out
+
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
 
 
-  const loginButton =
-    document.getElementById(
-      "loginButton"
-    );
+function toggleAccountMenu(){
 
+  const menu =
+    document.getElementById("accountDropdown");
 
-  const userMenu =
-    document.getElementById(
-      "userMenu"
-    );
-
-
-  const avatar =
-    document.getElementById(
-      "userAvatar"
-    );
-
-
-  if(email){
-
-    loginButton.style.display =
-      "none";
-
-    userMenu.style.display =
-      "flex";
-
-
-    const firstLetter =
-      email
-        .charAt(0)
-        .toUpperCase();
-
-
-    avatar.textContent =
-      firstLetter;
-
-  }else{
-
-    loginButton.style.display =
-      "block";
-
-    userMenu.style.display =
-      "none";
-
+  if(menu){
+    menu.classList.toggle("show");
   }
 
 }
 
 
-/* =========================================================
-   SELECT TOOL
-========================================================= */
+document.addEventListener("click",(event)=>{
+
+  const account =
+    document.querySelector(".account");
+
+  if(account && !account.contains(event.target)){
+
+    const menu =
+      document.getElementById("accountDropdown");
+
+    if(menu){
+      menu.classList.remove("show");
+    }
+
+  }
+
+});
+
+
+/* =====================================================
+   TOOL SELECT
+===================================================== */
 
 function selectTool(tool){
 
   currentTool = tool;
-
 
   document
     .querySelectorAll(".tool-card")
@@ -2334,37 +1999,25 @@ function selectTool(tool){
 
     });
 
+  const data = tools[tool];
 
-  const data =
-    tools[tool];
+  document.getElementById("panelEmoji")
+    .textContent = data.emoji;
 
+  document.getElementById("panelTitle")
+    .textContent = data.title;
 
-  document
-    .getElementById("panelEmoji")
-    .textContent =
-      data.emoji;
-
-
-  document
-    .getElementById("panelTitle")
-    .textContent =
-      data.title;
-
-
-  document
-    .getElementById("panelDescription")
-    .textContent =
-      data.description;
-
+  document.getElementById("panelDescription")
+    .textContent = data.description;
 
   scrollToGenerator();
 
 }
 
 
-/* =========================================================
+/* =====================================================
    SCROLL
-========================================================= */
+===================================================== */
 
 function scrollToGenerator(){
 
@@ -2378,9 +2031,9 @@ function scrollToGenerator(){
 }
 
 
-/* =========================================================
+/* =====================================================
    GET TOPIC
-========================================================= */
+===================================================== */
 
 function getTopic(){
 
@@ -2390,238 +2043,186 @@ function getTopic(){
       .value
       .trim();
 
-
   if(!topic){
 
     alert(
-      "Enter a topic first. Example: 5 surprising facts about the human brain"
+      "Enter a topic first.\n\nExample: 5 surprising facts about the human brain"
     );
-
 
     document
       .getElementById("topic")
       .focus();
 
-
     return null;
 
   }
-
 
   return topic;
 
 }
 
 
-/* =========================================================
+/* =====================================================
+   SAFE HTML
+===================================================== */
+
+function escapeHTML(value){
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =====================================================
    GENERATE
-========================================================= */
+===================================================== */
 
 function generateContent(){
 
-  const topic =
-    getTopic();
-
+  const topic = getTopic();
 
   if(!topic) return;
 
-
   const loading =
-    document.getElementById(
-      "loading"
-    );
-
+    document.getElementById("loading");
 
   const result =
-    document.getElementById(
-      "result"
-    );
-
+    document.getElementById("result");
 
   const output =
-    document.getElementById(
-      "output"
-    );
+    document.getElementById("output");
 
+  result.classList.remove("show");
 
-  result.classList.remove(
-    "show"
-  );
-
-
-  loading.classList.add(
-    "show"
-  );
-
+  loading.classList.add("show");
 
   setTimeout(()=>{
 
-
     let html = "";
-
 
     if(currentTool === "script"){
       html = createScript(topic);
     }
 
-
     if(currentTool === "hooks"){
       html = createHooks(topic);
     }
-
 
     if(currentTool === "titles"){
       html = createTitles(topic);
     }
 
-
     if(currentTool === "captions"){
       html = createCaptions(topic);
     }
-
 
     if(currentTool === "ideas"){
       html = createIdeas(topic);
     }
 
-
     if(currentTool === "engine"){
       html = createEngine(topic);
     }
 
-
-    output.innerHTML =
-      html;
-
+    output.innerHTML = html;
 
     lastResultText =
       output.innerText;
 
+    loading.classList.remove("show");
 
-    loading.classList.remove(
-      "show"
-    );
-
-
-    result.classList.add(
-      "show"
-    );
-
+    result.classList.add("show");
 
     result.scrollIntoView({
       behavior:"smooth",
       block:"start"
     });
 
-
   },850);
 
 }
 
 
-/* =========================================================
+/* =====================================================
    SCRIPT GENERATOR
-========================================================= */
+===================================================== */
 
 function createScript(topic){
 
-  const tone =
-    document.getElementById(
-      "tone"
-    ).value;
+  const safeTopic =
+    escapeHTML(topic);
 
+  const tone =
+    document.getElementById("tone").value;
 
   const platform =
-    document.getElementById(
-      "platform"
-    ).value;
-
+    document.getElementById("platform").value;
 
   const style =
-    document.getElementById(
-      "style"
-    ).value;
-
+    document.getElementById("style").value;
 
   const hook =
-    getHook(
-      topic,
-      tone
-    );
-
+    getHook(topic,tone);
 
   const points = [
 
     {
       title:"The first surprise",
-
       text:
-        `Most people don't realize how interesting ${topic} really is. The first thing you need to know is that there is a detail here that completely changes the way you look at the subject.`,
-
+        `Most people don't realize how interesting ${safeTopic} really is. The first thing you need to know is that there is a detail here that completely changes the way you look at the subject.`,
       visual:
         "Open with a fast zoom, large text and a surprising visual related to the topic."
     },
 
-
     {
       title:"The unexpected part",
-
       text:
-        `But here's where it gets interesting. Something about ${topic} is very different from what most people assume. Show the contrast quickly so viewers have a reason to keep watching.`,
-
+        `But here's where it gets interesting. Something about ${safeTopic} is very different from what most people assume. Show the contrast quickly so viewers have a reason to keep watching.`,
       visual:
         "Use a before-and-after shot, comparison or quick visual transformation."
     },
 
-
     {
       title:"The fact people miss",
-
       text:
         `And this is the part most people never hear about. ${capitalize(topic)} has an unexpected connection that makes the whole subject even more fascinating.`,
-
       visual:
         "Cut to a close-up or unusual image. Add a dramatic sound effect."
     },
 
-
     {
       title:"The big reveal",
-
       text:
-        `Now here's the detail that makes this worth remembering. Once you know this, you will probably notice ${topic} completely differently the next time you see it.`,
-
+        `Now here's the detail that makes this worth remembering. Once you know this, you will probably notice ${safeTopic} completely differently the next time you see it.`,
       visual:
         "Pause for half a second, then reveal the key fact with large on-screen text."
     },
 
-
     {
       title:"The payoff",
-
       text:
-        `So if you remember only one thing about ${topic}, remember this: the obvious answer isn't always the real story. That's exactly why this topic is so fascinating.`,
-
+        `So if you remember only one thing about ${safeTopic}, remember this: the obvious answer isn't always the real story. That's exactly why this topic is so fascinating.`,
       visual:
         "End with the strongest visual and a quick zoom toward the final statement."
     }
 
   ];
 
-
   let html = "";
-
 
   html += `
 
     <div class="output-section">
 
-      <h4>
-        🔥 HOOK
-      </h4>
+      <h4>🔥 HOOK</h4>
 
       <div class="hook-box">
-        ${hook}
+        ${getHook(topic,tone)}
       </div>
 
     </div>
@@ -2633,14 +2234,10 @@ function createScript(topic){
 
     <div class="output-section">
 
-      <h4>
-        🎬 INTRO
-      </h4>
+      <h4>🎬 INTRO</h4>
 
       <p>
-        Stop scrolling — because what you're about to discover about ${topic}
-        is probably not what you expect. Stay until the end, because the final
-        point is the one most people completely miss.
+Stop scrolling — because what you're about to discover about ${safeTopic} is probably not what you expect. Stay until the end, because the final point is the one most people completely miss.
       </p>
 
     </div>
@@ -2652,68 +2249,56 @@ function createScript(topic){
 
     <div class="output-section">
 
-      <h4>
-        ⚡ MAIN CONTENT
-      </h4>
+      <h4>⚡ MAIN CONTENT</h4>
 
   `;
 
 
-  points.forEach(
-    (point,index)=>{
+  points.forEach((point,index)=>{
 
-      html += `
+    html += `
 
-        <div class="script-point">
+      <div class="script-point">
 
-          <div class="number">
-            ${index+1}
+        <div class="number">
+          ${index+1}
+        </div>
+
+        <div class="point-content">
+
+          <strong>
+            ${point.title}
+          </strong>
+
+          <div>
+            ${point.text}
           </div>
 
-          <div class="point-content">
-
-            <strong>
-              ${point.title}
-            </strong>
-
-            <div>
-              ${point.text}
-            </div>
-
-            <div class="visual">
-              🎥 Visual:
-              ${point.visual}
-            </div>
-
+          <div class="visual">
+            🎥 Visual:
+            ${point.visual}
           </div>
 
         </div>
 
-      `;
+      </div>
 
-    }
-  );
+    `;
+
+  });
 
 
-  html += `
-    </div>
-  `;
+  html += `</div>`;
 
 
   html += `
 
     <div class="output-section">
 
-      <h4>
-        📢 CTA
-      </h4>
+      <h4>📢 CTA</h4>
 
       <p>
-        Which one surprised you the most?
-        Tell me in the comments — and follow
-        for more ${style === "tips"
-          ? "tips and hacks"
-          : "surprising facts"}.
+Which one surprised you the most? Tell me in the comments — and follow for more ${style === "tips" ? "tips and hacks" : "surprising facts"}.
       </p>
 
     </div>
@@ -2725,14 +2310,12 @@ function createScript(topic){
 
     <div class="output-section">
 
-      <h4>
-        📱 PLATFORM
-      </h4>
+      <h4>📱 PLATFORM</h4>
 
       <div class="tag-list">
 
         <span class="tag">
-          ${platform}
+          ${escapeHTML(platform)}
         </span>
 
         <span class="tag">
@@ -2740,11 +2323,11 @@ function createScript(topic){
         </span>
 
         <span class="tag">
-          ${tone}
+          ${escapeHTML(tone)}
         </span>
 
         <span class="tag">
-          ${style}
+          ${escapeHTML(style)}
         </span>
 
         <span class="tag">
@@ -2761,42 +2344,43 @@ function createScript(topic){
 
   `;
 
-
   return html;
 
 }
 
 
-/* =========================================================
+/* =====================================================
    HOOKS
-========================================================= */
+===================================================== */
 
 function createHooks(topic){
 
+  const safeTopic =
+    escapeHTML(topic);
+
   const hooks = [
 
-    `STOP SCROLLING! You won't believe what happens when you discover the truth about ${topic}...`,
+    `STOP SCROLLING! You won't believe what happens when you discover the truth about ${safeTopic}...`,
 
-    `Nobody talks about this side of ${topic} — and once you know it, you'll see it differently.`,
+    `Nobody talks about this side of ${safeTopic} — and once you know it, you'll see it differently.`,
 
-    `I thought I knew everything about ${topic}... then I discovered this.`,
+    `I thought I knew everything about ${safeTopic}... then I discovered this.`,
 
-    `This sounds completely fake, but the truth about ${topic} is actually crazier.`,
+    `This sounds completely fake, but the truth about ${safeTopic} is actually crazier.`,
 
-    `Before you scroll, you need to know this one thing about ${topic}.`,
+    `Before you scroll, you need to know this one thing about ${safeTopic}.`,
 
-    `Most people get ${topic} completely wrong. Here's why.`,
+    `Most people get ${safeTopic} completely wrong. Here's why.`,
 
-    `The next 30 seconds could completely change what you think about ${topic}.`,
+    `The next 30 seconds could completely change what you think about ${safeTopic}.`,
 
     `Wait until you see the final part — because it makes everything else make sense.`,
 
-    `You've probably seen ${topic} before, but you've never noticed THIS.`,
+    `You've probably seen ${safeTopic} before, but you've never noticed THIS.`,
 
-    `Here's something about ${topic} that almost nobody tells you.`
+    `Here's something about ${safeTopic} that almost nobody tells you.`
 
   ];
-
 
   return `
 
@@ -2806,25 +2390,21 @@ function createHooks(topic){
         🪝 10 SCROLL-STOPPING HOOKS
       </h4>
 
-      ${
-        hooks.map(
-          (hook,i)=>`
+      ${hooks.map((hook,i)=>`
 
-          <div class="script-point">
+        <div class="script-point">
 
-            <div class="number">
-              ${i+1}
-            </div>
-
-            <div class="point-content">
-              ${hook}
-            </div>
-
+          <div class="number">
+            ${i+1}
           </div>
 
-        `
-        ).join("")
-      }
+          <div class="point-content">
+            ${hook}
+          </div>
+
+        </div>
+
+      `).join("")}
 
     </div>
 
@@ -2846,40 +2426,42 @@ function createHooks(topic){
 }
 
 
-/* =========================================================
+/* =====================================================
    TITLES
-========================================================= */
+===================================================== */
 
 function createTitles(topic){
 
+  const safeTopic =
+    escapeHTML(capitalize(topic));
+
   const titles = [
 
-    `5 Things About ${capitalize(topic)} You Probably Didn't Know 🤯`,
+    `5 Things About ${safeTopic} You Probably Didn't Know 🤯`,
 
-    `The Truth About ${capitalize(topic)} Nobody Tells You`,
+    `The Truth About ${safeTopic} Nobody Tells You`,
 
-    `You Won't Believe These Facts About ${capitalize(topic)}`,
+    `You Won't Believe These Facts About ${safeTopic}`,
 
-    `I Wish I Knew This About ${capitalize(topic)} Sooner`,
+    `I Wish I Knew This About ${safeTopic} Sooner`,
 
-    `This Changes Everything About ${capitalize(topic)} 😳`,
+    `This Changes Everything About ${safeTopic} 😳`,
 
-    `The Secret Side of ${capitalize(topic)}`,
+    `The Secret Side of ${safeTopic}`,
 
-    `What Nobody Tells You About ${capitalize(topic)}`,
+    `What Nobody Tells You About ${safeTopic}`,
 
-    `7 Crazy Facts About ${capitalize(topic)}`,
+    `7 Crazy Facts About ${safeTopic}`,
 
-    `The Most Surprising Thing About ${capitalize(topic)}`,
+    `The Most Surprising Thing About ${safeTopic}`,
 
-    `Watch This Before You Learn About ${capitalize(topic)}`,
+    `Watch This Before You Learn About ${safeTopic}`,
 
-    `This Is Why ${capitalize(topic)} Is So Interesting`,
+    `This Is Why ${safeTopic} Is So Interesting`,
 
-    `The Dark Truth Behind ${capitalize(topic)}...`
+    `The Dark Truth Behind ${safeTopic}...`
 
   ];
-
 
   return `
 
@@ -2889,29 +2471,25 @@ function createTitles(topic){
         🏷️ VIRAL TITLE IDEAS
       </h4>
 
-      ${
-        titles.map(
-          (title,i)=>`
+      ${titles.map((title,i)=>`
 
-          <div class="script-point">
+        <div class="script-point">
 
-            <div class="number">
-              ${i+1}
-            </div>
+          <div class="number">
+            ${i+1}
+          </div>
 
-            <div class="point-content">
+          <div class="point-content">
 
-              <strong>
-                ${title}
-              </strong>
-
-            </div>
+            <strong>
+              ${title}
+            </strong>
 
           </div>
 
-        `
-        ).join("")
-      }
+        </div>
+
+      `).join("")}
 
     </div>
 
@@ -2920,15 +2498,18 @@ function createTitles(topic){
 }
 
 
-/* =========================================================
+/* =====================================================
    CAPTIONS
-========================================================= */
+===================================================== */
 
 function createCaptions(topic){
 
+  const safeTopic =
+    escapeHTML(topic);
+
   const captions = [
 
-    `You probably didn't know this about ${topic} 👀
+`You probably didn't know this about ${safeTopic} 👀
 
 Which fact surprised you the most?
 
@@ -2936,30 +2517,29 @@ Which fact surprised you the most?
 
 Follow for more surprising facts!`,
 
-    `Wait... did you know this about ${topic}? 🤯
+`Wait... did you know this about ${safeTopic}? 🤯
 
 I had to look this up twice.
 
 Save this so you don't forget it.`,
 
-    `The more you learn about ${topic}, the crazier it gets.
+`The more you learn about ${safeTopic}, the crazier it gets.
 
 Which part surprised you?
 
 🔥 Comment your answer below.`,
 
-    `Most people scroll past this without realizing how interesting ${topic} really is.
+`Most people scroll past this without realizing how interesting ${safeTopic} really is.
 
 Send this to someone who needs to see it.`,
 
-    `Okay, this one genuinely surprised me 😳
+`Okay, this one genuinely surprised me 😳
 
 What would you rate this fact from 1–10?
 
 👇 Drop your number below.`
 
   ];
-
 
   return `
 
@@ -2969,32 +2549,25 @@ What would you rate this fact from 1–10?
         💬 VIRAL CAPTIONS
       </h4>
 
-      ${
-        captions.map(
-          (caption,i)=>`
+      ${captions.map((caption,i)=>`
 
-          <div class="script-point">
+        <div class="script-point">
 
-            <div class="number">
-              ${i+1}
-            </div>
+          <div class="number">
+            ${i+1}
+          </div>
 
-            <div class="point-content">
+          <div class="point-content">
 
-              <div style="
-                white-space:pre-wrap;
-                line-height:1.65
-              ">
-                ${caption}
-              </div>
-
+            <div style="white-space:pre-wrap;line-height:1.65">
+              ${caption}
             </div>
 
           </div>
 
-        `
-        ).join("")
-      }
+        </div>
+
+      `).join("")}
 
     </div>
 
@@ -3025,76 +2598,78 @@ What would you rate this fact from 1–10?
 }
 
 
-/* =========================================================
+/* =====================================================
    CONTENT IDEAS
-========================================================= */
+===================================================== */
 
 function createIdeas(topic){
+
+  const safeTopic =
+    escapeHTML(topic);
 
   const ideas = [
 
     {
-      title:`5 surprising facts about ${topic}`,
+      title:`5 surprising facts about ${safeTopic}`,
       angle:"Fast-paced educational list"
     },
 
     {
-      title:`The biggest myths about ${topic}`,
+      title:`The biggest myths about ${safeTopic}`,
       angle:"Myth vs reality"
     },
 
     {
-      title:`What would happen if ${topic} suddenly disappeared?`,
+      title:`What would happen if ${safeTopic} suddenly disappeared?`,
       angle:"Curiosity / hypothetical"
     },
 
     {
-      title:`The hidden history of ${topic}`,
+      title:`The hidden history of ${safeTopic}`,
       angle:"Storytelling"
     },
 
     {
-      title:`Things beginners get wrong about ${topic}`,
+      title:`Things beginners get wrong about ${safeTopic}`,
       angle:"Mistakes"
     },
 
     {
-      title:`The most unusual examples of ${topic}`,
+      title:`The most unusual examples of ${safeTopic}`,
       angle:"Shock and curiosity"
     },
 
     {
-      title:`${topic}: 5 things nobody warns you about`,
+      title:`${safeTopic}: 5 things nobody warns you about`,
       angle:"Warning / list"
     },
 
     {
-      title:`The science behind ${topic}`,
+      title:`The science behind ${safeTopic}`,
       angle:"Explainer"
     },
 
     {
-      title:`I tried the most popular ${topic} claim`,
+      title:`I tried the most popular ${safeTopic} claim`,
       angle:"Experiment"
     },
 
     {
-      title:`The future of ${topic}`,
+      title:`The future of ${safeTopic}`,
       angle:"Prediction"
     },
 
     {
-      title:`The craziest story involving ${topic}`,
+      title:`The craziest story involving ${safeTopic}`,
       angle:"Story hook"
     },
 
     {
-      title:`What experts know about ${topic}`,
+      title:`What experts know about ${safeTopic}`,
       angle:"Authority / education"
     }
 
   ];
-
 
   return `
 
@@ -3104,34 +2679,30 @@ function createIdeas(topic){
         💡 12 CONTENT IDEAS
       </h4>
 
-      ${
-        ideas.map(
-          (idea,i)=>`
+      ${ideas.map((idea,i)=>`
 
-          <div class="script-point">
+        <div class="script-point">
 
-            <div class="number">
-              ${i+1}
-            </div>
+          <div class="number">
+            ${i+1}
+          </div>
 
-            <div class="point-content">
+          <div class="point-content">
 
-              <strong>
-                ${idea.title}
-              </strong>
+            <strong>
+              ${idea.title}
+            </strong>
 
-              <div class="visual">
-                🎯 Angle:
-                ${idea.angle}
-              </div>
-
+            <div class="visual">
+              🎯 Angle:
+              ${idea.angle}
             </div>
 
           </div>
 
-        `
-        ).join("")
-      }
+        </div>
+
+      `).join("")}
 
     </div>
 
@@ -3140,18 +2711,17 @@ function createIdeas(topic){
 }
 
 
-/* =========================================================
+/* =====================================================
    VIRAL ENGINE
-========================================================= */
+===================================================== */
 
 function createEngine(topic){
 
-  const hook =
-    getHook(
-      topic,
-      "viral"
-    );
+  const safeTopic =
+    escapeHTML(topic);
 
+  const hook =
+    getHook(topic,"viral");
 
   return `
 
@@ -3175,9 +2745,7 @@ function createEngine(topic){
       </h4>
 
       <p>
-        5 Things About
-        ${capitalize(topic)}
-        You Probably Didn't Know 🤯
+        5 Things About ${safeTopic} You Probably Didn't Know 🤯
       </p>
 
     </div>
@@ -3192,9 +2760,7 @@ function createEngine(topic){
 
       <div class="script-point">
 
-        <div class="number">
-          1
-        </div>
+        <div class="number">1</div>
 
         <div class="point-content">
 
@@ -3202,8 +2768,7 @@ function createEngine(topic){
             0–3 seconds — Hook
           </strong>
 
-          Start with the strongest statement
-          and an unusual visual.
+          Start with the strongest statement and an unusual visual.
 
         </div>
 
@@ -3212,9 +2777,7 @@ function createEngine(topic){
 
       <div class="script-point">
 
-        <div class="number">
-          2
-        </div>
+        <div class="number">2</div>
 
         <div class="point-content">
 
@@ -3222,8 +2785,7 @@ function createEngine(topic){
             3–10 seconds — Curiosity
           </strong>
 
-          Introduce the mystery
-          or surprising question.
+          Introduce the mystery or surprising question.
 
         </div>
 
@@ -3232,9 +2794,7 @@ function createEngine(topic){
 
       <div class="script-point">
 
-        <div class="number">
-          3
-        </div>
+        <div class="number">3</div>
 
         <div class="point-content">
 
@@ -3242,8 +2802,7 @@ function createEngine(topic){
             10–45 seconds — Value
           </strong>
 
-          Deliver the strongest facts
-          or story beats with fast visual changes.
+          Deliver the strongest facts or story beats with fast visual changes.
 
         </div>
 
@@ -3252,9 +2811,7 @@ function createEngine(topic){
 
       <div class="script-point">
 
-        <div class="number">
-          4
-        </div>
+        <div class="number">4</div>
 
         <div class="point-content">
 
@@ -3271,9 +2828,7 @@ function createEngine(topic){
 
       <div class="script-point">
 
-        <div class="number">
-          5
-        </div>
+        <div class="number">5</div>
 
         <div class="point-content">
 
@@ -3281,8 +2836,7 @@ function createEngine(topic){
             55–60 seconds — CTA
           </strong>
 
-          Ask a simple question
-          that encourages comments.
+          Ask a simple question that encourages comments.
 
         </div>
 
@@ -3298,14 +2852,13 @@ function createEngine(topic){
       </h4>
 
       <p>
-        You probably didn't know this about
-        ${topic} 👀
+You probably didn't know this about ${safeTopic} 👀
 
-        Which part surprised you the most?
+Which part surprised you the most?
 
-        👇 Tell me below.
+👇 Tell me below.
 
-        Follow for more.
+Follow for more.
       </p>
 
     </div>
@@ -3319,29 +2872,12 @@ function createEngine(topic){
 
       <div class="tag-list">
 
-        <span class="tag">
-          #viral
-        </span>
-
-        <span class="tag">
-          #fyp
-        </span>
-
-        <span class="tag">
-          #shorts
-        </span>
-
-        <span class="tag">
-          #reels
-        </span>
-
-        <span class="tag">
-          #facts
-        </span>
-
-        <span class="tag">
-          #didyouknow
-        </span>
+        <span class="tag">#viral</span>
+        <span class="tag">#fyp</span>
+        <span class="tag">#shorts</span>
+        <span class="tag">#reels</span>
+        <span class="tag">#facts</span>
+        <span class="tag">#didyouknow</span>
 
       </div>
 
@@ -3352,196 +2888,151 @@ function createEngine(topic){
 }
 
 
-/* =========================================================
+/* =====================================================
    HOOK ENGINE
-   FIXED VERSION
-========================================================= */
+===================================================== */
 
 function getHook(topic,tone){
+
+  const safeTopic =
+    escapeHTML(topic);
 
   const hooks = {
 
     viral:
-      `STOP SCROLLING! You won't believe what happens when you discover the truth about ${topic}...`,
+      `STOP SCROLLING! You won't believe what happens when you discover the truth about ${safeTopic}...`,
 
     shocking:
-      `This is the shocking truth about ${topic} that most people never hear about.`,
+      `This is the shocking truth about ${safeTopic} that most people never hear about.`,
 
     funny:
-      `Okay, explain why nobody told me THIS about ${topic} 😂`,
+      `Okay, explain why nobody told me THIS about ${safeTopic} 😂`,
 
     mysterious:
-      `There's something strange about ${topic} that almost nobody notices...`,
+      `There's something strange about ${safeTopic} that almost nobody notices...`,
 
     educational:
-      `Here are 5 things you should know about ${topic} before you believe everything you hear.`,
+      `Here are 5 things you should know about ${safeTopic} — before you believe everything you hear.`,
 
     dramatic:
-      `Everything you think you know about ${topic} is about to change.`
+      `Everything you think you know about ${safeTopic} is about to change.`
 
   };
 
-
-  return hooks[tone]
-    || hooks.viral;
+  return hooks[tone] || hooks.viral;
 
 }
 
 
-/* =========================================================
+/* =====================================================
    CAPITALIZE
-========================================================= */
+===================================================== */
 
 function capitalize(text){
 
   if(!text) return "";
 
-  return (
-    text.charAt(0).toUpperCase()
-    +
-    text.slice(1)
-  );
+  return text.charAt(0).toUpperCase()
+    + text.slice(1);
 
 }
 
 
-/* =========================================================
+/* =====================================================
    COPY
-========================================================= */
+===================================================== */
 
 async function copyResult(){
 
   if(!lastResultText){
 
-    alert(
-      "Generate something first."
-    );
+    alert("Generate something first.");
 
     return;
 
   }
 
-
   try{
 
-    await navigator.clipboard.writeText(
-      lastResultText
-    );
+    await navigator.clipboard
+      .writeText(lastResultText);
 
-    alert(
-      "✅ Copied to clipboard!"
-    );
+    alert("✅ Copied to clipboard!");
 
   }catch(error){
 
     const area =
-      document.createElement(
-        "textarea"
-      );
-
+      document.createElement("textarea");
 
     area.value =
       lastResultText;
 
-
-    document.body.appendChild(
-      area
-    );
-
+    document.body.appendChild(area);
 
     area.select();
 
-
-    document.execCommand(
-      "copy"
-    );
-
+    document.execCommand("copy");
 
     area.remove();
 
-
-    alert(
-      "✅ Copied!"
-    );
+    alert("✅ Copied!");
 
   }
 
 }
 
 
-/* =========================================================
+/* =====================================================
    DOWNLOAD
-========================================================= */
+===================================================== */
 
 function downloadResult(){
 
   if(!lastResultText){
 
-    alert(
-      "Generate something first."
-    );
+    alert("Generate something first.");
 
     return;
 
   }
 
-
   const blob =
     new Blob(
       [lastResultText],
       {
-        type:
-          "text/plain;charset=utf-8"
+        type:"text/plain;charset=utf-8"
       }
     );
 
-
   const url =
-    URL.createObjectURL(
-      blob
-    );
-
+    URL.createObjectURL(blob);
 
   const a =
-    document.createElement(
-      "a"
-    );
+    document.createElement("a");
 
-
-  a.href =
-    url;
-
+  a.href = url;
 
   a.download =
     "ViralForge-Content.txt";
 
-
-  document.body.appendChild(
-    a
-  );
-
+  document.body.appendChild(a);
 
   a.click();
 
-
   a.remove();
 
-
-  URL.revokeObjectURL(
-    url
-  );
+  URL.revokeObjectURL(url);
 
 }
 
 
-/* =========================================================
+/* =====================================================
    ABOUT
-========================================================= */
+===================================================== */
 
 function showAbout(){
 
   alert(
-
 `ViralForge AI
 
 Create viral-ready:
@@ -3553,31 +3044,29 @@ Create viral-ready:
 • Content Ideas
 • Complete Viral Packages
 
-Enter a topic, choose your style and generate your content.`
+Enter a topic, choose your style and generate your content.
 
+Your ViralForge logo is also fully animated ✨`
   );
 
 }
 
 
-/* =========================================================
+/* =====================================================
    DEFAULT EXAMPLE
-========================================================= */
+===================================================== */
 
-document
-  .getElementById("topic")
-  .value =
-    "5 surprising facts about the human brain";
+document.getElementById("topic").value =
+  "5 surprising facts about the human brain";
 
 
-/* =========================================================
-   CHECK LOGIN WHEN PAGE LOADS
-========================================================= */
+/* =====================================================
+   RESTORE LOGIN
+===================================================== */
 
-updateLoginUI();
-
+updateAccountUI();
 
 </script>
 
 </body>
-  </html>
+   </html>
