@@ -46,7 +46,7 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}a{color:inherit;
 textarea,input,select{width:100%;color:white;background:#09090d;border:1px solid #2a2a35;border-radius:13px;padding:14px;outline:none}
 textarea{min-height:125px;resize:vertical;line-height:1.55}
 textarea:focus,input:focus,select:focus{border-color:#8b5cf6;box-shadow:0 0 0 3px rgba(139,92,246,.1)}
-.options{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.generate{width:100%;padding:16px;border:0;border-radius:13px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:white;font-weight:900;box-shadow:0 10px 30px rgba(124,58,237,.22)}
+.options{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.generate{width:100%;padding:16px;border:0;border-radius:13px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:white;font-weight:900;box-shadow:0 10px 30px rgba(124,58,237,.22)}
 .generate:hover{transform:translateY(-1px)}
 .loading{display:none;text-align:center;padding:32px}.loading.show{display:block}.spinner{width:34px;height:34px;border:3px solid #2b2037;border-top-color:#a855f7;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 13px}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -113,6 +113,7 @@ footer{text-align:center;color:#666674;font-size:12px;padding:30px 20px 45px}foo
       <textarea id="topic" placeholder="Example: 5 surprising facts about the human brain"></textarea>
     </div>
     <div class="options">
+      <div class="field"><label for="language">Language</label><select id="language"><option value="English">English</option><option value="Urdu">اردو (Urdu)</option><option value="Roman Urdu">Roman Urdu</option></select></div>
       <div class="field"><label for="platform">Platform</label><select id="platform"><option>TikTok</option><option>YouTube Shorts</option><option>Instagram Reels</option><option>Facebook Reels</option></select></div>
       <div class="field"><label for="tone">Tone</label><select id="tone"><option value="viral">Viral & Energetic</option><option value="shocking">Shocking</option><option value="funny">Funny</option><option value="mysterious">Mysterious</option><option value="educational">Educational</option><option value="dramatic">Dramatic</option></select></div>
       <div class="field"><label for="style">Style</label><select id="style"><option value="fast">Fast-paced</option><option value="story">Storytelling</option><option value="list">Top 5 / List</option><option value="facts">Facts</option><option value="tips">Tips & Hacks</option></select></div>
@@ -185,7 +186,37 @@ function capitalize(t){return t?t.charAt(0).toUpperCase()+t.slice(1):""}
 function point(n,title,text,visual="Use fast cuts, captions and a strong visual."){
  return `<div class="script-point"><div class="number">${n}</div><div class="point-content"><strong>${title}</strong><div>${text}</div><div class="visual">🎥 Visual: ${visual}</div></div></div>`
 }
+function isUrdu(){return document.getElementById("language").value==="Urdu"}
+function isRomanUrdu(){return document.getElementById("language").value==="Roman Urdu"}
+function createUrduScript(topic){
+ return `<div class="output-section" dir="rtl"><h4>🔥 ہُک</h4><div class="hook-box">رک جائیں! ${topic} کے بارے میں یہ حیران کن بات شاید آپ نے پہلے کبھی نہیں سنی ہوگی۔</div></div>
+ <div class="output-section" dir="rtl"><h4>🎬 تعارف</h4><p>اس ویڈیو میں ہم ${topic} کے بارے میں ایسی دلچسپ اور حیران کن باتیں جانیں گے جو شاید آپ کو حیران کر دیں۔ آخر تک ضرور دیکھیں، کیونکہ آخری نکتہ سب سے زیادہ دلچسپ ہے۔</p></div>
+ <div class="output-section" dir="rtl"><h4>⚡ مرکزی اسکرپٹ</h4>
+ ${point(1,"پہلا حیران کن نکتہ",`${topic} کے بارے میں ایک ایسی بات جسے بہت سے لوگ نہیں جانتے۔ اسے مختصر اور واضح انداز میں پیش کریں۔`,"شروع میں زبردست ویژول اور بڑا اردو ٹیکسٹ دکھائیں۔")}
+ ${point(2,"غیر متوقع حقیقت",`لیکن اصل دلچسپ بات یہ ہے کہ ${topic} کے بارے میں عام خیال ہمیشہ مکمل حقیقت نہیں ہوتا۔`,"موازنہ یا پہلے اور بعد کا ویژول استعمال کریں۔")}
+ ${point(3,"وہ بات جو اکثر رہ جاتی ہے",`یہ وہ نکتہ ہے جس پر اکثر لوگ توجہ نہیں دیتے، اور یہی اسے مزید دلچسپ بناتا ہے۔`,"کلوز اپ اور ڈرامائی ساؤنڈ ایفیکٹ استعمال کریں۔")}
+ ${point(4,"بڑا انکشاف",`اب وہ بات سامنے آتی ہے جو ${topic} کو بالکل مختلف انداز میں دیکھنے پر مجبور کر سکتی ہے۔`,"ایک مختصر توقف کے بعد بڑا انکشاف کریں۔")}
+ ${point(5,"اختتام",`اگر آپ صرف ایک بات یاد رکھیں تو وہ یہ ہو: ${topic} میں بظاہر نظر آنے والی حقیقت کے پیچھے ایک اور دلچسپ کہانی ہو سکتی ہے۔`,"سب سے مضبوط ویژول کے ساتھ ویڈیو ختم کریں۔")}
+ </div>
+ <div class="output-section" dir="rtl"><h4>📢 کال ٹو ایکشن</h4><p>آپ کو کون سا نکتہ سب سے زیادہ حیران کن لگا؟ کمنٹ میں ضرور بتائیں اور مزید ویڈیوز کے لیے فالو کریں۔</p></div>
+ <div class="output-section"><h4>📱 FORMAT</h4><div class="tag-list"><span class="tag">Urdu</span><span class="tag">45–60 sec</span><span class="tag">Short-form</span></div></div>`;
+}
+function createRomanUrduScript(topic){
+ return `<div class="output-section"><h4>🔥 HOOK</h4><div class="hook-box">Ruk jao! ${topic} ke baare mein yeh hairan kun baat shayad aap ne pehle kabhi nahi suni hogi.</div></div>
+ <div class="output-section"><h4>🎬 INTRO</h4><p>Is video mein hum ${topic} ke baare mein kuch aisi interesting aur surprising baatein jaanenge jo shayad aap ko hairan kar dein. Aakhir tak zaroor dekhein, kyun ke last point sab se zyada interesting hai.</p></div>
+ <div class="output-section"><h4>⚡ MAIN SCRIPT</h4>
+ ${point(1,"Pehla surprising point",`${topic} ke baare mein ek aisi baat jo bohat se log nahi jaante.`)}
+ ${point(2,"Unexpected fact",`Lekin asal interesting baat yeh hai ke ${topic} ke baare mein aam soch hamesha poori haqeeqat nahi hoti.`)}
+ ${point(3,"Hidden detail",`Yeh woh point hai jis par aksar log tawajjo nahi dete, aur isi wajah se yeh aur bhi interesting hai.`)}
+ ${point(4,"Big reveal",`Ab woh baat saamne aati hai jo ${topic} ko bilkul different nazar se dekhne par majboor kar sakti hai.`)}
+ ${point(5,"Payoff",`Agar aap sirf ek baat yaad rakhein, to woh yeh hai: ${topic} ke peeche ek aur interesting kahani ho sakti hai.`)}
+ </div>
+ <div class="output-section"><h4>📢 CTA</h4><p>Aap ko konsa point sab se zyada surprising laga? Comment mein zaroor batayein aur mazeed videos ke liye follow karein.</p></div>
+ <div class="output-section"><h4>📱 FORMAT</h4><div class="tag-list"><span class="tag">Roman Urdu</span><span class="tag">45–60 sec</span><span class="tag">Short-form</span></div></div>`;
+}
 function createScript(topic){
+ if(isUrdu()) return createUrduScript(topic);
+ if(isRomanUrdu()) return createRomanUrduScript(topic);
  const tone=document.getElementById("tone").value,platform=document.getElementById("platform").value,style=document.getElementById("style").value;
  let h=`<div class="output-section"><h4>🔥 HOOK</h4><div class="hook-box">${getHook(topic,tone)}</div></div>`;
  h+=`<div class="output-section"><h4>🎬 INTRO</h4><p>Stop scrolling — because what you're about to discover about ${topic} is probably not what you expect. Stay until the end, because the final point is the one most people completely miss.</p></div><div class="output-section"><h4>⚡ MAIN CONTENT</h4>`;
@@ -194,7 +225,7 @@ function createScript(topic){
  h+=point(3,"The fact people miss",`And this is the part most people never hear about. ${capitalize(topic)} has an unexpected angle that makes the whole subject more fascinating.`,"Use an unusual image and a dramatic sound hit.");
  h+=point(4,"The big reveal",`Now here's the detail that makes this worth remembering. Once you know this, you'll probably see ${topic} differently.`,"Pause briefly, then reveal the key point with bold text.");
  h+=point(5,"The payoff",`So if you remember only one thing about ${topic}, remember this: the obvious answer isn't always the real story.`,"End on the strongest visual and a fast punch-in.");
- h+=`</div><div class="output-section"><h4>📢 CTA</h4><p>Which part surprised you the most? Tell me in the comments — and follow for more ${style==="tips"?"tips and hacks":"surprising facts"}.</p></div><div class="output-section"><h4>📱 FORMAT</h4><div class="tag-list"><span class="tag">${platform}</span><span class="tag">45–60 sec</span><span class="tag">${tone}</span><span class="tag">${style}</span><span class="tag">Fast cuts</span><span class="tag">Captions</span></div></div>`;
+ h+=`</div><div class="output-section"><h4>📢 CTA</h4><p>Which part surprised you the most? Tell me in the comments — and follow for more ${style==="tips"?"tips and hacks":"surprising facts"}.</p></div><div class="output-section"><h4>📱 FORMAT</h4><div class="tag-list"><span class="tag">${platform}</span><span class="tag">${document.getElementById("language").value}</span><span class="tag">45–60 sec</span><span class="tag">${tone}</span><span class="tag">${style}</span><span class="tag">Fast cuts</span><span class="tag">Captions</span></div></div>`;
  return h;
 }
 function createHooks(topic){
@@ -234,4 +265,4 @@ const saved=localStorage.getItem("vf_name");if(saved)document.getElementById("av
 document.getElementById("topic").value="5 surprising facts about the human brain";
 </script>
 </body>
-</html>
+                                                                                                                                                                                                                                                                                                                                                 </html>
