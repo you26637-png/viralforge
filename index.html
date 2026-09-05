@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#07070a">
+<link rel="manifest" href="manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ViralForge AI">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 <title>ViralForge AI — Free Creator Engine</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -263,6 +271,13 @@ function closeLogin(){document.getElementById("loginModal").classList.remove("sh
 function demoLogin(){const n=document.getElementById("loginName").value.trim()||"Creator";localStorage.setItem("vf_name",n);document.getElementById("avatar").textContent=n.slice(0,2).toUpperCase();closeLogin();alert("✅ Welcome, "+n+"! This is local demo login.")}
 const saved=localStorage.getItem("vf_name");if(saved)document.getElementById("avatar").textContent=saved.slice(0,2).toUpperCase();
 document.getElementById("topic").value="5 surprising facts about the human brain";
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").catch(() => {});
+  });
+}
 </script>
 </body>
 </html>
