@@ -1,166 +1,905 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ViralForge AI</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ViralForge AI</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #0b0b0f;
-      color: white;
-      min-height: 100vh;
-    }
+body{
+  font-family:Inter,Arial,sans-serif;
+  background:#09090b;
+  color:#f5f5f5;
+  min-height:100vh;
+}
 
-    header {
-      padding: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #222;
-    }
+button,input,textarea,select{
+  font:inherit;
+}
 
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-    }
+button{
+  cursor:pointer;
+}
 
-    .hero {
-      text-align: center;
-      padding: 80px 20px 50px;
-    }
+.app{
+  display:flex;
+  min-height:100vh;
+}
 
-    .hero h1 {
-      font-size: 45px;
-      margin-bottom: 20px;
-    }
+/* SIDEBAR */
 
-    .hero h1 span {
-      color: #8b5cf6;
-    }
+.sidebar{
+  width:250px;
+  background:#0d0d10;
+  border-right:1px solid #24242a;
+  padding:22px 16px;
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+}
 
-    .hero p {
-      color: #aaa;
-      font-size: 18px;
-      max-width: 600px;
-      margin: auto;
-      line-height: 1.6;
-    }
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:22px;
+  font-weight:800;
+  margin-bottom:30px;
+}
 
-    .tools {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 20px;
-    }
+.logo-icon{
+  width:36px;
+  height:36px;
+  border-radius:11px;
+  background:linear-gradient(135deg,#7c3aed,#a855f7);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+}
 
-    .tool {
-      background: #15151c;
-      border: 1px solid #292934;
-      border-radius: 16px;
-      padding: 30px;
-      text-align: center;
-    }
+.new-chat{
+  width:100%;
+  border:1px solid #34343b;
+  background:#17171c;
+  color:#fff;
+  padding:12px;
+  border-radius:10px;
+  margin-bottom:25px;
+}
 
-    .tool .icon {
-      font-size: 40px;
-      margin-bottom: 15px;
-    }
+.nav-title{
+  color:#777780;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  margin:20px 10px 8px;
+}
 
-    .tool h2 {
-      margin-bottom: 10px;
-    }
+.nav-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  width:100%;
+  padding:12px;
+  border-radius:9px;
+  color:#b5b5bd;
+  background:none;
+  border:0;
+  text-align:left;
+  margin-bottom:4px;
+}
 
-    .tool p {
-      color: #999;
-    }
+.nav-item:hover,
+.nav-item.active{
+  background:#1a1a20;
+  color:#fff;
+}
 
-    .button {
-      display: inline-block;
-      margin-top: 40px;
-      padding: 15px 30px;
-      background: #8b5cf6;
-      color: white;
-      text-decoration: none;
-      border-radius: 10px;
-      font-weight: bold;
-    }
+/* MAIN */
 
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      color: #666;
-    }
+.main{
+  margin-left:250px;
+  width:calc(100% - 250px);
+  min-height:100vh;
+}
 
-    @media (max-width: 600px) {
-      .hero h1 {
-        font-size: 34px;
-      }
+.topbar{
+  height:65px;
+  border-bottom:1px solid #24242a;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 28px;
+  background:rgba(9,9,11,.9);
+  position:sticky;
+  top:0;
+  z-index:10;
+}
 
-      .tools {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+.mobile-menu{
+  display:none;
+  border:0;
+  background:none;
+  color:#fff;
+  font-size:24px;
+}
+
+.model{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:700;
+}
+
+.status{
+  width:8px;
+  height:8px;
+  background:#22c55e;
+  border-radius:50%;
+}
+
+.profile{
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#7c3aed,#ec4899);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+}
+
+/* HERO */
+
+.content{
+  max-width:1000px;
+  margin:auto;
+  padding:65px 25px 100px;
+}
+
+.hero{
+  text-align:center;
+  margin-bottom:45px;
+}
+
+.badge{
+  display:inline-block;
+  padding:7px 13px;
+  border:1px solid #34235c;
+  background:#171021;
+  color:#b78cff;
+  border-radius:30px;
+  font-size:13px;
+  margin-bottom:20px;
+}
+
+.hero h1{
+  font-size:clamp(38px,6vw,68px);
+  line-height:1.05;
+  margin-bottom:20px;
+  letter-spacing:-2px;
+}
+
+.gradient{
+  background:linear-gradient(90deg,#fff,#a855f7);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.hero p{
+  max-width:650px;
+  margin:auto;
+  color:#9999a3;
+  font-size:18px;
+  line-height:1.7;
+}
+
+/* TOOL SELECTOR */
+
+.tools{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-bottom:25px;
+}
+
+.tool{
+  background:#111116;
+  border:1px solid #27272e;
+  border-radius:14px;
+  padding:17px;
+  color:#aaaab3;
+  text-align:left;
+  transition:.2s;
+}
+
+.tool:hover{
+  border-color:#6840a5;
+  transform:translateY(-2px);
+}
+
+.tool.selected{
+  border-color:#8b5cf6;
+  background:#18131f;
+  color:#fff;
+}
+
+.tool-icon{
+  font-size:23px;
+  margin-bottom:8px;
+}
+
+.tool strong{
+  display:block;
+  margin-bottom:4px;
+}
+
+.tool small{
+  color:#777780;
+}
+
+/* GENERATOR */
+
+.generator{
+  background:#101014;
+  border:1px solid #292930;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 20px 70px rgba(0,0,0,.35);
+}
+
+.generator-header{
+  padding:20px 22px;
+  border-bottom:1px solid #292930;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.generator-header h2{
+  font-size:18px;
+}
+
+.ai-label{
+  color:#9b6cff;
+  font-size:13px;
+}
+
+.form{
+  padding:22px;
+}
+
+label{
+  display:block;
+  color:#c4c4ca;
+  font-size:14px;
+  margin-bottom:8px;
+}
+
+textarea,
+input,
+select{
+  width:100%;
+  background:#09090c;
+  color:#fff;
+  border:1px solid #303039;
+  border-radius:11px;
+  padding:14px;
+  outline:none;
+  margin-bottom:17px;
+}
+
+textarea{
+  min-height:130px;
+  resize:vertical;
+}
+
+textarea:focus,
+input:focus,
+select:focus{
+  border-color:#8b5cf6;
+}
+
+.options{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.generate{
+  width:100%;
+  border:0;
+  border-radius:11px;
+  padding:15px;
+  background:linear-gradient(135deg,#7c3aed,#9333ea);
+  color:#fff;
+  font-weight:800;
+  font-size:16px;
+  box-shadow:0 8px 30px rgba(124,58,237,.25);
+}
+
+.generate:hover{
+  filter:brightness(1.12);
+}
+
+/* RESULT */
+
+.result{
+  display:none;
+  border-top:1px solid #292930;
+}
+
+.result-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:17px 22px;
+}
+
+.result-head h3{
+  font-size:16px;
+}
+
+.copy{
+  border:1px solid #35353d;
+  background:#18181d;
+  color:#ddd;
+  padding:8px 12px;
+  border-radius:8px;
+}
+
+.result-content{
+  padding:0 22px 25px;
+  color:#d0d0d6;
+  line-height:1.8;
+  white-space:pre-wrap;
+}
+
+/* LOADING */
+
+.loading{
+  display:none;
+  padding:25px;
+  text-align:center;
+  color:#a78bfa;
+}
+
+.dots span{
+  animation:blink 1.4s infinite;
+  margin:0 2px;
+}
+
+.dots span:nth-child(2){animation-delay:.2s}
+.dots span:nth-child(3){animation-delay:.4s}
+
+@keyframes blink{
+  0%,80%,100%{opacity:.2}
+  40%{opacity:1}
+}
+
+/* MOBILE */
+
+@media(max-width:750px){
+
+  .sidebar{
+    display:none;
+  }
+
+  .main{
+    margin-left:0;
+    width:100%;
+  }
+
+  .mobile-menu{
+    display:block;
+  }
+
+  .topbar{
+    padding:0 16px;
+  }
+
+  .content{
+    padding:45px 15px 70px;
+  }
+
+  .hero h1{
+    letter-spacing:-1px;
+  }
+
+  .hero p{
+    font-size:16px;
+  }
+
+  .tools{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .options{
+    grid-template-columns:1fr;
+    gap:0;
+  }
+
+  .generator-header{
+    padding:17px;
+  }
+
+  .form{
+    padding:17px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <header>
-    <div class="logo">⚡ ViralForge</div>
-    <div>AI Creator Tools</div>
-  </header>
+<div class="app">
 
-  <section class="hero">
-    <h1>Create Content <span>Faster.</span></h1>
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+  <div class="logo">
+    <div class="logo-icon">⚡</div>
+    ViralForge
+  </div>
+
+  <button class="new-chat" onclick="newChat()">＋ New Creation</button>
+
+  <div class="nav-title">Create</div>
+
+  <button class="nav-item active" onclick="selectTool('script')">
+    ✍️ Script Generator
+  </button>
+
+  <button class="nav-item" onclick="selectTool('hook')">
+    🪝 Viral Hooks
+  </button>
+
+  <button class="nav-item" onclick="selectTool('title')">
+    🏷️ Title Generator
+  </button>
+
+  <button class="nav-item" onclick="selectTool('caption')">
+    💬 Captions
+  </button>
+
+  <button class="nav-item" onclick="selectTool('idea')">
+    💡 Content Ideas
+  </button>
+
+  <div class="nav-title">Workspace</div>
+
+  <button class="nav-item">
+    🕘 History
+  </button>
+
+  <button class="nav-item">
+    ⚙️ Settings
+  </button>
+
+</aside>
+
+<!-- MAIN -->
+
+<main class="main">
+
+<header class="topbar">
+
+  <button class="mobile-menu">☰</button>
+
+  <div class="model">
+    <span class="status"></span>
+    ViralForge AI
+  </div>
+
+  <div class="profile">VF</div>
+
+</header>
+
+<section class="content">
+
+  <div class="hero">
+
+    <div class="badge">✦ AI CREATOR ENGINE</div>
+
+    <h1>
+      Create content
+      <span class="gradient">that goes viral.</span>
+    </h1>
+
     <p>
-      ViralForge helps creators generate scripts, hooks, titles,
-      captions and more with AI.
+      Generate powerful scripts, scroll-stopping hooks,
+      viral titles, captions and content ideas in seconds.
     </p>
 
-    <a href="#tools" class="button">Start Creating</a>
-  </section>
+  </div>
 
-  <section class="tools" id="tools">
+  <!-- TOOLS -->
 
-    <div class="tool">
-      <div class="icon">✍️</div>
-      <h2>Script Generator</h2>
-      <p>Create engaging video scripts.</p>
+  <div class="tools">
+
+    <button class="tool selected" id="scriptTool" onclick="selectTool('script')">
+      <div class="tool-icon">✍️</div>
+      <strong>Script Generator</strong>
+      <small>Create engaging video scripts</small>
+    </button>
+
+    <button class="tool" id="hookTool" onclick="selectTool('hook')">
+      <div class="tool-icon">🪝</div>
+      <strong>Viral Hooks</strong>
+      <small>Stop the scroll instantly</small>
+    </button>
+
+    <button class="tool" id="titleTool" onclick="selectTool('title')">
+      <div class="tool-icon">🏷️</div>
+      <strong>Titles</strong>
+      <small>High-click video titles</small>
+    </button>
+
+    <button class="tool" id="captionTool" onclick="selectTool('caption')">
+      <div class="tool-icon">💬</div>
+      <strong>Captions</strong>
+      <small>Captions built for engagement</small>
+    </button>
+
+    <button class="tool" id="ideaTool" onclick="selectTool('idea')">
+      <div class="tool-icon">💡</div>
+      <strong>Ideas</strong>
+      <small>Never run out of content</small>
+    </button>
+
+    <button class="tool">
+      <div class="tool-icon">🚀</div>
+      <strong>Viral Engine</strong>
+      <small>Optimize your content</small>
+    </button>
+
+  </div>
+
+  <!-- GENERATOR -->
+
+  <div class="generator">
+
+    <div class="generator-header">
+      <h2 id="generatorTitle">✍️ Script Generator</h2>
+      <span class="ai-label">ViralForge AI</span>
     </div>
 
-    <div class="tool">
-      <div class="icon">🪝</div>
-      <h2>Viral Hooks</h2>
-      <p>Generate attention-grabbing hooks.</p>
+    <div class="form">
+
+      <label>What do you want to create?</label>
+
+      <textarea
+        id="topic"
+        placeholder="Example: 5 unbelievable phone tricks everyone should know..."
+      ></textarea>
+
+      <div class="options">
+
+        <div>
+          <label>Platform</label>
+
+          <select id="platform">
+            <option>TikTok</option>
+            <option>YouTube Shorts</option>
+            <option>Instagram Reels</option>
+            <option>YouTube</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Style</label>
+
+          <select id="style">
+            <option>Viral & Energetic</option>
+            <option>Professional</option>
+            <option>Funny</option>
+            <option>Storytelling</option>
+            <option>Educational</option>
+          </select>
+        </div>
+
+      </div>
+
+      <button class="generate" onclick="generateContent()">
+        ✨ Generate with ViralForge AI
+      </button>
+
     </div>
 
-    <div class="tool">
-      <div class="icon">🎯</div>
-      <h2>Title Generator</h2>
-      <p>Create powerful video titles.</p>
+    <div class="loading" id="loading">
+      <div>ViralForge AI is thinking</div>
+      <div class="dots">
+        <span>●</span>
+        <span>●</span>
+        <span>●</span>
+      </div>
     </div>
 
-    <div class="tool">
-      <div class="icon">📝</div>
-      <h2>Caption Generator</h2>
-      <p>Generate captions and hashtags.</p>
+    <div class="result" id="result">
+
+      <div class="result-head">
+        <h3>✨ AI Generated Result</h3>
+
+        <button class="copy" onclick="copyResult()">
+          Copy
+        </button>
+      </div>
+
+      <div class="result-content" id="resultContent"></div>
+
     </div>
 
-  </section>
+  </div>
 
-  <footer>
-    © 2026 ViralForge — Create. Grow. Go Viral.
-  </footer>
+</section>
+
+</main>
+
+</div>
+
+<script>
+
+let currentTool = "script";
+
+const titles = {
+  script:"✍️ Script Generator",
+  hook:"🪝 Viral Hook Generator",
+  title:"🏷️ Title Generator",
+  caption:"💬 Caption Generator",
+  idea:"💡 Content Idea Generator"
+};
+
+function selectTool(tool){
+
+  currentTool = tool;
+
+  document.querySelectorAll(".tool").forEach(x=>{
+    x.classList.remove("selected");
+  });
+
+  const element = document.getElementById(tool+"Tool");
+
+  if(element){
+    element.classList.add("selected");
+  }
+
+  document.getElementById("generatorTitle").innerText = titles[tool];
+
+  document.getElementById("topic").placeholder =
+    tool === "script"
+    ? "Example: 5 unbelievable phone tricks everyone should know..."
+    : tool === "hook"
+    ? "Example: A video about strange facts..."
+    : tool === "title"
+    ? "Example: A video about AI tools..."
+    : tool === "caption"
+    ? "Example: A video showing an amazing life hack..."
+    : "Example: I create videos about technology...";
+
+}
+
+function generateContent(){
+
+  const topic =
+    document.getElementById("topic").value.trim();
+
+  if(!topic){
+    alert("Enter a topic first.");
+    return;
+  }
+
+  const loading = document.getElementById("loading");
+  const result = document.getElementById("result");
+  const content = document.getElementById("resultContent");
+
+  result.style.display="none";
+  loading.style.display="block";
+
+  setTimeout(()=>{
+
+    loading.style.display="none";
+    result.style.display="block";
+
+    const platform =
+      document.getElementById("platform").value;
+
+    const style =
+      document.getElementById("style").value;
+
+    let output="";
+
+    if(currentTool==="script"){
+
+      output =
+`🔥 HOOK
+
+STOP SCROLLING! You won't believe what happens when you try this...
+
+🎬 INTRO
+
+Today we're talking about: ${topic}
+
+And trust me — you need to see this until the end.
+
+⚡ MAIN CONTENT
+
+Here's the interesting part.
+
+${topic}
+
+Break this down into simple, visual steps that keep viewers watching.
+
+Add surprising details, fast transitions and curiosity gaps throughout the video.
+
+🚀 VIRAL MOMENT
+
+But here's the part almost nobody knows...
+
+This is where you reveal your biggest surprise or most useful fact.
+
+🎯 ENDING
+
+Would you try this?
+
+Follow ViralForge for more content like this.
+
+Platform: ${platform}
+Style: ${style}`;
+
+    }
+
+    else if(currentTool==="hook"){
+
+      output =
+`🔥 10 VIRAL HOOKS
+
+1. STOP scrolling — you need to see this.
+
+2. Almost nobody knows this about ${topic}.
+
+3. I wish someone told me this sooner...
+
+4. This sounds fake, but it's actually real.
+
+5. Wait until you see number 3.
+
+6. Here's something the internet doesn't want you to miss.
+
+7. You've probably been doing this completely wrong.
+
+8. This one trick changes everything.
+
+9. Don't try this before watching the whole video.
+
+10. The final one is absolutely crazy.`;
+
+    }
+
+    else if(currentTool==="title"){
+
+      output =
+`🏆 VIRAL TITLE IDEAS
+
+1. You NEED to Know This About ${topic}
+
+2. Nobody Told Me This Before...
+
+3. 5 Things You Won't Believe Are Real
+
+4. The Internet Is Going Crazy Over This
+
+5. I Tried ${topic} — Here's What Happened
+
+6. This Changes Everything
+
+7. You Won't Believe Number 3
+
+8. The Secret Nobody Talks About
+
+9. This Is Actually INSANE 🤯
+
+10. Watch This Before You Try It`;
+
+    }
+
+    else if(currentTool==="caption"){
+
+      output =
+`🔥 VIRAL CAPTION
+
+You probably didn't know this...
+
+${topic}
+
+Would you try it? 👀
+
+👇 Tell me in the comments.
+
+Save this for later 🔥
+
+Follow ViralForge for more viral content.
+
+#viral #fyp #trending #reels #shorts #viralforge`;
+
+    }
+
+    else if(currentTool==="idea"){
+
+      output =
+`💡 CONTENT IDEAS
+
+1. The hidden truth about ${topic}
+
+2. 5 things beginners get wrong
+
+3. Things I wish I knew earlier
+
+4. The most surprising facts about this topic
+
+5. Testing viral claims about ${topic}
+
+6. Before vs after
+
+7. Beginner mistakes you should avoid
+
+8. The secret nobody tells you
+
+9. Ranking the best methods
+
+10. I tried the viral version so you don't have to.
+
+11. Myth vs reality
+
+12. The ultimate guide in 60 seconds`;
+
+    }
+
+    content.innerText=output;
+
+  },1000);
+
+}
+
+function copyResult(){
+
+  const text =
+    document.getElementById("resultContent").innerText;
+
+  navigator.clipboard.writeText(text);
+
+  const button =
+    document.querySelector(".copy");
+
+  button.innerText="Copied ✓";
+
+  setTimeout(()=>{
+    button.innerText="Copy";
+  },1500);
+
+}
+
+function newChat(){
+
+  document.getElementById("topic").value="";
+  document.getElementById("result").style.display="none";
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+</script>
 
 </body>
 </html>
